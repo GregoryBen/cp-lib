@@ -14,6 +14,7 @@ struct Csegtree {
   }
 
   void update(int k, const T& x) {
+    assert(0 <= k && k <= n - 1);
     k += n;
     tree[k] += x;
     for (k /= 2; k >= 1; k /= 2) {
