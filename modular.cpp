@@ -27,8 +27,8 @@ struct modular {
   }
 
  public:
-  modular() : x(0) { }
-  template <typename T> modular(T value) : x(normalize(value)) { }
+  modular() : x(0) {}
+  template <typename T> modular(T value) : x(normalize(value)) {}
 
   modular operator + () const { return modular(*this); }
   modular operator - () const { if (x != 0) x = MOD - x; return modular(*this); }
