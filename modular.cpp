@@ -1,5 +1,5 @@
 template <typename T>
-T modinv(T a, T m) {
+T inverse(T a, T m) {
   assert(m > 0);
   if (m == 1) return 0;
   a %= m;
@@ -11,28 +11,57 @@ T modinv(T a, T m) {
 
 template <int MOD>
 struct modular {
-  static_assert(MOD > 0);
-  int r;
-  modular() { r = 0; }
-  modular(long long _r) : r(int(_r)) { if (abs(r) >= MOD) r %= MOD; if(r < 0) r += MOD; }
-  modular inv() const { modular res; res.r = modinv(int(*this), MOD); return res; }
+  using value_type = int;
+  static_assert(MOD > 1, "Modulus must be greater than 1");
 
-  modular operator -() const { return modular(-r); }
+ private:
+  value_type x;
 
-  modular operator + (const modular &t) const { return modular(*this) += t; }
-  modular operator - (const modular &t) const { return modular(*this) -= t; }
-  modular operator * (const modular &t) const { return (r * t.r) % MOD; }
-  modular operator / (const modular &t) const { return *this * t.inv(); }
+  template <typename T>
+  static value_type normalize (T value) noexcept {
+    if (value < 0) {
+      value = (-value) % MOD;
+      return (value_type) (value ? value : MOD - value);
+    }
+    return (value_type) (value % MOD);
+  }
 
-  modular operator += (const modular &t) { r += t.r; if(r >= MOD) r -= MOD; return *this; }
-  modular operator -= (const modular &t) { r -= t.r; if(r < 0) r += MOD; return *this; }
-  modular operator *= (const modular &t) { return *this = *this * t; }
-  modular operator /= (const modular &t) { return *this = *this / t; }
+ public:
+  modular() : x(0) { }
+  template <typename T> modular(T value) : x(normalize(value)) { }
 
-  bool operator==(const modular &t) const { return r == t.r; }
-  bool operator!=(const modular &t) const { return r != t.r; }
+  modular operator + () const { return modular(*this); }
+  modular operator - () const { if (x != 0) x = MOD - x; return modular(*this); }
 
-  explicit operator int() const { return r; }
+  modular& operator += (const modular &p) { if ((x += p.x) >= MOD) x -= MOD; return (*this); }
+  modular& operator -= (const modular &p) { if ((x += MOD - p.x) >= MOD) x -= MOD; return (*this); }
+  modular& operator *= (const modular &p) { x = (int) (1LL * x * p.x % MOD); return (*this); }
+  modular& operator /= (const modular &p) { return *this *= modular(inverse(p.x, MOD)); }
+  modular operator + (const modular &p) const { return (modular(*this) += p); }
+  modular operator - (const modular &p) const { return (modular(*this) -= p); }
+  modular operator * (const modular &p) const { return (modular(*this) *= p); }
+  modular operator / (const modular &p) const { return (modular(*this) /= p); }
+
+  bool operator==(const modular &p) const { return x == p.x; }
+  bool operator!=(const modular &p) const { return x != p.x; }
+
+  template <typename T>
+  explicit operator T() const { return static_cast<T>(x); }
+
+  friend std::istream& operator >> (std::istream &in, modular &p) {
+    long long v;
+    in >> v;
+    p = modular(v);
+    return in;
+  }
+
+  friend std::ostream& operator << (std::ostream &out, const modular &p) {
+    return out << p.x;
+  }
+
+  friend string to_string(const modular& p) {
+    return to_string(p.x);
+  }
 };
 
 template <typename T, typename U>
@@ -46,24 +75,6 @@ T power(T a, U b) {
     a *= a; b >>= 1;
   }
   return res;
-}
-
-template <int T>
-istream& operator >> (istream &in, modular<T>& x) {
-  long long _r;
-  in >> _r;
-  x = modular<T>(_r);
-  return in;
-}
-
-template <int T>
-ostream& operator << (ostream &out, modular<T>& x) {
-  return out << int(x);
-}
-
-template <int T>
-string to_string(const modular<T>& x) {
-  return to_string(int(x));
 }
 
 const int md = (int) ...|;
