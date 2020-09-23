@@ -33,6 +33,10 @@ struct modular {
   modular operator + () const { return modular(*this); }
   modular operator - () const { if (x != 0) x = MOD - x; return modular(*this); }
 
+  modular& operator++() { return ++x, *this; }
+  modular& operator--() { return --x, *this; }
+  modular operator++(int) { modular t = *this; return ++x, t; }
+  modular operator--(int) { modular t = *this; return --x, t; }
   modular& operator += (const modular &p) { if ((x += p.x) >= MOD) x -= MOD; return (*this); }
   modular& operator -= (const modular &p) { if ((x += MOD - p.x) >= MOD) x -= MOD; return (*this); }
   modular& operator *= (const modular &p) { x = (int) (1LL * x * p.x % MOD); return (*this); }
@@ -44,6 +48,7 @@ struct modular {
 
   bool operator==(const modular &p) const { return x == p.x; }
   bool operator!=(const modular &p) const { return x != p.x; }
+  bool operator!() const { return !x; }
 
   template <typename T>
   explicit operator T() const { return static_cast<T>(x); }
