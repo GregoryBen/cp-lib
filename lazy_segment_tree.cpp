@@ -40,14 +40,17 @@ struct segtree {
     tree.resize(2 * n, id.first);
     has.resize(n);
     delay.resize(n, id.second);
-    for (int i = 0; i < n; i++) tree[n + i] = *(begin++);
-    for (int i = n - 1; i >= 1; i--) tree[i] = unite(tree[2 * i], tree[2 * i + 1]);
+    copy(begin, end, tree.begin() + n);
+    for (int i = n - 1; i >= 1; i--) 
+      tree[i] = unite(tree[2 * i], tree[2 * i + 1]);
   }
 
   template<typename I>
   void set_leaves(I create) {
-    for (int i = 0; i < n; i++) tree[n + i] = create(i);
-    for (int i = n - 1; i >= 1; i--) tree[i] = unite(tree[2 * i], tree[2 * i + 1]);
+    for (int i = 0; i < n; i++) 
+      tree[n + i] = create(i);
+    for (int i = n - 1; i >= 1; i--) 
+      tree[i] = unite(tree[2 * i], tree[2 * i + 1]);
   }
 
   void _apply(int i, const L &x) {
