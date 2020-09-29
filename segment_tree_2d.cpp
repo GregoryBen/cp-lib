@@ -1,4 +1,4 @@
-template <typename T, class F = function<T(const T&, const T&)>>
+|template <typename T, class F = function<T(const T&, const T&)>>
 struct segtree2d {
   int n, m;
   vector<vector<T>> tree;
