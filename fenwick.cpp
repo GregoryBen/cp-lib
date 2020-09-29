@@ -4,11 +4,13 @@ struct fenwick {
   vector<T> tree;
 
   fenwick(int _n): n(_n) {
+    assert(n > 0);
     tree.resize(n);
   }
 
   template <typename IT>
   fenwick(IT begin, IT end) : n(end - begin) {
+    assert(n > 0);
     tree.resize(n);
     build(begin, end);
   }
