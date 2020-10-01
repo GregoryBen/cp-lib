@@ -45,7 +45,7 @@ struct segtree {
       tree[i] = unite(tree[2 * i], tree[2 * i + 1]);
   }
 
-  template<typename I>
+  template <typename I>
   void set_leaves(I create) {
     for (int i = 0; i < n; i++) 
       tree[n + i] = create(i);
