@@ -1,11 +1,13 @@
 |struct persistent_segtree {
   static const int N = (int) 1e7;
   struct node {
+    ...
     // long long sum = 0;
     // int k = 1;
     // long long lazy = 0;
 
     void apply(long long x) {
+      ...
       // sum = x * k;
       // lazy += x;
     }
@@ -26,8 +28,9 @@
 
   node unite(const node &a, const node &b) const {
     node res;
-    res.sum = a.sum + b.sum;
-    res.k = a.k + b.k;
+    ...
+    // res.sum = a.sum + b.sum;
+    // res.k = a.k + b.k;
     return res;
   }
 
