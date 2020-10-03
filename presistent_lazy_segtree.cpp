@@ -7,7 +7,7 @@
     // int k = 1;
     // long long lazy = 0;
 
-    void apply(long long x) {
+    void apply(... x, int l, int r) {
       ...
       // sum = x * k; (assign)
       // sum += x * k; (add)
@@ -43,8 +43,8 @@
   inline void push(int cur, int L, int R) {
     if (!tree[cur].lazy) return;
     if (L != R) {
-      tree[l[cur] = copy(l[cur])].apply(tree[cur].lazy);
-      tree[r[cur] = copy(r[cur])].apply(tree[cur].lazy);
+      tree[l[cur] = copy(l[cur])].apply(tree[cur].lazy, L, R);
+      tree[r[cur] = copy(r[cur])].apply(tree[cur].lazy, L, R);
     }
     tree[cur].lazy = 0;
   }
@@ -53,7 +53,7 @@
   int build(const vector<T>& a, int L, int R) {
     int cur = pos++;
     if (L == R) {
-      tree[cur].apply(a[L]);
+      tree[cur].apply(a[L], L, R);
       return cur;
     }
     int M = (L + R) / 2;
@@ -68,7 +68,7 @@
     if (R < lo || hi < L) return cur;
     int x = copy(cur);
     if (lo <= L && R <= hi) {
-      tree[x].apply(v);
+      tree[x].apply(v, L, R);
       return x;
     }
     push(x, L, R);
