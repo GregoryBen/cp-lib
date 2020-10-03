@@ -1,5 +1,5 @@
 |struct persistent_segtree {
-  static const int N = (int) 1e7;
+  static const int N = (int) 1e6;
   struct node {
     ...
     // long long sum = 0;
