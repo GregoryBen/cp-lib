@@ -9,7 +9,8 @@
 
     void apply(long long x) {
       ...
-      // sum = x * k;
+      // sum = x * k; (assign)
+      // sum += x * k; (add)
       // lazy += x;
     }
   };
