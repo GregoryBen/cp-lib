@@ -43,8 +43,9 @@
   inline void push(int cur, int L, int R) {
     if (!tree[cur].lazy) return;
     if (L != R) {
-      tree[l[cur] = copy(l[cur])].apply(tree[cur].lazy, L, R);
-      tree[r[cur] = copy(r[cur])].apply(tree[cur].lazy, L, R);
+      int M = (L + R) / 2;
+      tree[l[cur] = copy(l[cur])].apply(tree[cur].lazy, L, M);
+      tree[r[cur] = copy(r[cur])].apply(tree[cur].lazy, M + 1, R);
     }
     tree[cur].lazy = 0;
   }
