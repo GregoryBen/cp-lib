@@ -113,4 +113,19 @@ struct segtree {
     }
     return unite(res_front, res_back);
   }
+  
+  void debug() {
+    #ifdef LOCAL
+      cerr << "start" << '\n';
+      for (int i = 0; i < 2 * n; i++) {
+//        cerr << i << ' ' << tree[i].sum << ' ' << tree[i].k << ' ';
+        if (i < n) {
+//          cerr << delay[i].first << ' ' << delay[i].second << '\n';
+        } else {
+          cerr << '\n';
+        }
+      }
+      cerr << "end" << '\n';
+    #endif // LOCAL
+  }
 };
