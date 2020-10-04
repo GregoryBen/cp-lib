@@ -29,7 +29,7 @@ struct fenwick_range {
   void update(int l, int r, T x) {
     assert(0 <= l && l <= r && r <= n - 1);
     update_bit(l, x, -x * (l - 1));
-    update_bit(r + 1, -x, x * r);
+    update_bit(r, -x, x * r);
   }
 
   T query(int k) {
