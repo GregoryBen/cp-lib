@@ -24,7 +24,7 @@ struct fenwick {
     }
   }
 
-  void add(int k, T x) {
+  void update(int k, T x) {
     while (k < n) {
       tree[k] += x;
       k |= (k + 1);
