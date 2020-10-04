@@ -1,4 +1,4 @@
-|template <typename T>
+template <typename T>
 T inverse(T a, T m) {
   assert(m > 0);
   if (m == 1) return 0;
@@ -141,5 +141,5 @@ T power(T a, U b) {
   return res;
 }
 
-const int md = (int) (119 << 23) + 1;
+const int md = (int) ...|;
 using mint = modular<md>;
