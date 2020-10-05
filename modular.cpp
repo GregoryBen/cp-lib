@@ -10,7 +10,7 @@ T inverse(T a, T m) {
 }
 
 template <int MOD>
-struct modular {
+class modular {
   using value_type = int;
   static_assert(MOD > 1, "Modulus must be greater than 1");
 
