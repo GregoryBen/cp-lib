@@ -11,6 +11,7 @@ struct fenwick_range {
 
   template <typename IT>
   fenwick_range(IT begin, IT end) : n(end - begin) {
+    assert(n > 0);
     data_mul.resize(n);
     data_add.resize(n);
     for (int i = 0; i < n; i++) {
