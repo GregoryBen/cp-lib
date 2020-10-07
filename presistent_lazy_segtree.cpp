@@ -13,12 +13,11 @@
       // sum += x * k; (add)
       // lazy += x;
     }
-  };
+  } tree[N];
 
   int n;
   int pos = 0;
   int l[N], r[N];
-  node tree[N];
   vector<int> form;
 
   int copy(int cur) {
