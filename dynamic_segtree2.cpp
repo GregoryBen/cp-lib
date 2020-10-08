@@ -33,14 +33,14 @@ struct dynamic_segtree {
 
   template <typename T>
   void update(node *v, B l, B r, B L, B R, T x) {
-    if (l > r || R < l || L > r) {
+    if (R < l || L > r) {
         return;
     }
     if (L <= l && r <= R) {
         (*v).apply(x);
         return;
     }
-    B mid = (l + r) / 2;
+    B mid = l + (r - l) / 2;
     if (v -> l == nullptr) {
         v -> l = new node(l, mid);
     }
@@ -52,13 +52,13 @@ struct dynamic_segtree {
   }
 
   node query(node *v, B l, B r, B pos) {
-    if (!v || l > r || pos < l || r < pos) {
+    if (!v || pos < l || r < pos) {
         return node{};
     }
     if (l == r) {
         return *v;
     }
-    B mid = (l + r) / 2;
+    B mid = l + (r - l) / 2;
     return unite(*v, unite(query(v -> l, l, mid, pos), query(v -> r, mid + 1, r, pos)));
   }
 
