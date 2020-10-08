@@ -28,7 +28,16 @@ struct dynamic_segtree {
   }
 
   dynamic_segtree(B _n) : n(_n) {
+    assert(n > 0);
     root = new node(0, n - 1);
+  }
+  
+  template <typename IT> 
+  dynamic_segtree(IT begin, IT end) : n(end - begin) {
+    assert(n > 0);
+    root = new node(0, n - 1);
+    for (int i = 0; i < n; i++) {
+      update(i, i, *(begin++));
   }
 
   template <typename T>
