@@ -51,14 +51,14 @@ struct dynamic_segtree {
         return;
     }
     B mid = l + (r - l) / 2;
-    if (v -> l == nullptr) {
-        v -> l = new node(l, mid);
+    if (v->l == nullptr) {
+        v->l = new node(l, mid);
     }
-    if (v -> r == nullptr) {
-        v -> r = new node(mid + 1, r);
+    if (v->r == nullptr) {
+        v->r = new node(mid + 1, r);
     }
-    update(v -> l, l, mid, L, R, x);
-    update(v -> r, mid + 1, r, L, R, x);
+    update(v->l, l, mid, L, R, x);
+    update(v->r, mid + 1, r, L, R, x);
   }
 
   node query(node *v, B l, B r, B pos) {
@@ -69,7 +69,7 @@ struct dynamic_segtree {
         return *v;
     }
     B mid = l + (r - l) / 2;
-    return unite(*v, unite(query(v -> l, l, mid, pos), query(v -> r, mid + 1, r, pos)));
+    return unite(*v, unite(query(v->l, l, mid, pos), query(v->r, mid + 1, r, pos)));
   }
 
   template <typename T>
