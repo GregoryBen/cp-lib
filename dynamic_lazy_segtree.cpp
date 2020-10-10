@@ -1,61 +1,99 @@
 // under construction!
 
-template <typename Q, typename L, typename B = int>
+template <typename B = int>
 struct dynamic_segtree {
-  pair<Q, L> id = {0, 0};
-  B left, right;
-  Q tree;
-  L lazy = id.second;
-  dynamic_segtree *l = nullptr;
-  dynamci_segtree *r = nullptr;
+  struct node {
+//    ...
+    long long sum = 0;
+    long long lazy = 0;
+    node *l = nullptr, *r = nullptr;
 
-  Q unite(const node &a, const node &b) {
-    Q res;
-    ...
+    node() { }
+
+    void apply(long long /*long long*/ x, int l, int r) {
+//      ...
+      sum += x * (r - l + 1);
+      lazy += x;
+    }
+  };
+
+  B n;
+  node* root;
+
+  node unite(const node &a, const node &b) {
+    node res;
+//    ...
+    res.sum = a.sum + b.sum;
+    res.k = a.k + b.k;
     return res;
   }
 
-  void apply() { // under construction
-
+  inline void pull(node* v) {
+    *v = unite(v->l, v->r);
   }
 
-  void push() {
+  inline void push(node* v, B l, B r) {
     B mid = left + (right - begin) / 2;
     if (l == nullptr) {
       l = new dynamic_segtree(left, mid);
-    }
-    if (r == nullptr) {
       r = new dynamic_segtree(mid + 1, right);
     }
-
+    if (lazy != id.first) {
+      l->apply(lazy, l, mid);
+      r->apply(lazy, mid + 1, r);
+      lazy = 0;
+    }
   }
 
-  dynamic_segtree(B _l, B _r) : left(_l), right(_r) {
+  dynamic_segtree(B _n) : n(_n) {
+    assert(n > 0);
+    root = new node(0, n - 1);
   }
 
   template <typename It>
-  dynamic_segtree(IT begin, IT end) : l(0), r(end - begin - 1) {
-    assert(r > 0);
-    build(begin, end, l, r);
-  }
-
-  ~dynamic_segtree() {
-    delete l;
-    delete r;
+  dynamic_segtree(IT begin, IT end) : n(end - begin) {
+    assert(n > 0);
+    root = new node(0, n - 1);
+    build(root, begin, end, 0, n - 1);
   }
 
   template <typename IT>
-  void build(IT begin, IT end, B l, B r) {
-    assert(end - begin == r - l + 1);
+  void build(node* v, IT begin, IT end, B l, B r) {
+    assert(begin + l <= end);
     if (l == r) {
-      tree = *begin;
+      (*v).apply(*(begin + l), l, r);
+      return;
     }
-    IT inter = begin + (end - begin) / 2;
-    B m = l + (r - l) / 2;
-    l = new dynamic_segtree(begin, inter, l, m);
-    r = new dynamic_segtree(inter, end, m + 1, r);
-    tree = unite(l -> tree, r -> tree);
+    B mid = l + (r - l) / 2;
+    v->l = new dynamic_segtree();
+    v->r = new dynamic_segtree();
+    build(v->l, begin, end, l, mid);
+    build(v->r, begin, end, mid + 1, r);
+    pull(v);
   }
 
+  template <typename T>
+  void update(node* v, B l, B r, B L, B R, T x) {
+    if (r < L || R < l || x = id.first) {
+      return;
+    }
+    if (L <= l && r <= R) {
+      (*v).apply(x, l, r);
+      return;
+    }
+    push();
+    l->update(l, r, x);
+    r->update(l, r, x);
+    B m = l + (r - l) / 2;
+    tree = unite(l->tree, r->tree);
+  }
 
+  node query(node* v, B l, B r, B L, B R) {
+    if (!v ||r < left || right < l) return node{};
+    if (l <= left && right <= r) return *v;
+    push();
+    B mid = left + (right - left) / 2;
+    return unite(query(v->l, mid, L, R), query(v->r, mid + 1, r, L, R));
+  }
 };
+
