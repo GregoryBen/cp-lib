@@ -3,16 +3,12 @@
 template <typename B = int>
 struct dynamic_segtree {
   struct node {
-    ...
+   ...
 //     long long sum = 0;
-    B x, y;
     node *l = nullptr, *r = nullptr;
 
-    node() { }
-    node(B _x, B _y) : x(_x), y(_y) { }
-
-    void apply(... /*long long*/ v) {
-      ...
+    void apply(... /*long long*/ v, B L, B R) {
+     ...
 //       sum += v;
     }
   };
@@ -22,20 +18,20 @@ struct dynamic_segtree {
 
   node unite(const node &a, const node &b) {
     node res;
-    ...
+   ...
 //     res.sum = a.sum + b.sum;
     return res;
   }
 
   dynamic_segtree(B _n) : n(_n) {
     assert(n > 0);
-    root = new node(0, n - 1);
+    root = new node();
   }
-  
-  template <typename IT> 
+
+  template <typename IT>
   dynamic_segtree(IT begin, IT end) : n(end - begin) {
     assert(n > 0);
-    root = new node(0, n - 1);
+    root = new node();
     for (int i = 0; i < n; i++) {
       update(i, i, *(begin++));
     }
@@ -47,15 +43,15 @@ struct dynamic_segtree {
         return;
     }
     if (L <= l && r <= R) {
-        (*v).apply(x);
+        (*v).apply(x, l, r);
         return;
     }
     B mid = l + (r - l) / 2;
     if (v->l == nullptr) {
-        v->l = new node(l, mid);
+        v->l = new node();
     }
     if (v->r == nullptr) {
-        v->r = new node(mid + 1, r);
+        v->r = new node();
     }
     update(v->l, l, mid, L, R, x);
     update(v->r, mid + 1, r, L, R, x);
