@@ -23,15 +23,11 @@ struct dynamic_segtree {
     return res;
   }
 
-  node unite(const node &par, const node &a, const node &b) {
-    node res = unite(a, b);
-    res.l = par.l;
-    res.r = par.r;
-    return res;
-  }
-
   inline void pull(node* v) {
-    *v = unite(*v , *(v->l), *(v->r));
+    node cur = unite(*(v->l), *(v->r));
+    cur.l = v->l;
+    cur.r = v->r;
+    *v = cur;
   }
 
   inline void push(node* v, B L, B R) {
