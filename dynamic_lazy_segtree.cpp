@@ -1,15 +1,15 @@
 template <typename B = int>
 struct dynamic_segtree {
   struct node {
-    ...
-//    long long sum = 0;
+//    ...
+    long long sum = 0;
     long long lazy = 0;
     node *l = nullptr, *r = nullptr;
 
     void apply(long long /*long long*/ x, B L, B R) {
-      ...
-//      sum += x * (R - L + 1);
-//      lazy += x;
+//      ...
+      sum += x * (R - L + 1);
+      lazy += x;
     }
   };
 
@@ -18,8 +18,8 @@ struct dynamic_segtree {
 
   node unite(const node &a, const node &b) {
     node res;
-    ...
-//    res.sum = a.sum + b.sum;
+//    ...
+    res.sum = a.sum + b.sum;
     return res;
   }
 
