@@ -1,4 +1,4 @@
-template <typename B = int>
+template <typename B>
 struct dynamic_segtree {
   struct node {
     ...
