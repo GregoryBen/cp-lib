@@ -6,7 +6,7 @@ struct dynamic_segtree {
 //    long long lazy = 0;
     node *l = nullptr, *r = nullptr;
 
-    void apply(long long /*long long*/ x, B L, B R) {
+    void apply(... /*long long*/ x, B L, B R) {
       ...
 //      sum += x * (R - L + 1);
 //      lazy += x;
