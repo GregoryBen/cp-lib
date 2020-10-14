@@ -1,4 +1,4 @@
-namespace GraphGenerator {
+|namespace GraphGenerator {
   
 vector<array<int, 2>> renaming(vector<array<int, 2>>& g, int n) {
   int m = g.size();
