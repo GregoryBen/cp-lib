@@ -7,7 +7,7 @@ set /a i = 1
   brute < in > out2
   fc out1 out2 > nul
   if errorlevel 1 goto fail
-  set /a i = %i% + 1
+  set /a i += 1
   goto loop
 :fail
   echo Found failing test!
