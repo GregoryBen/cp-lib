@@ -1,4 +1,4 @@
-|namespace GraphGenerator {
+|namespace graph_generator {
   
 vector<array<int, 2>> renaming(vector<array<int, 2>>& g, int n) {
   int m = g.size();
@@ -60,6 +60,6 @@ vector<array<int, 2>> simply_connected_graph(int n, int m) {
   return res;
 }
   
-} // namespace GraphGenerator
+} // namespace graph_generator
 
-using namespace GraphGenerator;
+using namespace graph_generator;
