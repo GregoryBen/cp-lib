@@ -15,7 +15,7 @@
 
   void add(int u, int v) {
     assert(0 <= u && u <= n - 1 && 0 <= v && v <= n -1);
-    node[u].push_back(v);
+    node[u].emplace_back(v);
   }
 
   bool match(int u) {
