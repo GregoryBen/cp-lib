@@ -1,10 +1,12 @@
 class matching {
  public:
   int n, m;
-  vector<int> left, right, vis;
+  vector<int> left, right;
+  vector<bool> vis;
   vector<vector<int>> node;
 
   matching(int _n, int _m) : n(_n), m(_m) {
+    assert(n > 0 && m > 0);
     node.resize(n);
     left.resize(n, -1);
     right.resize(m, -1);
@@ -12,6 +14,7 @@ class matching {
   }
 
   void add(int u, int v) {
+    assert(0 <= u && u <= n - 1 && 0 <= v && v <= n -1);
     node[u].push_back(v);
   }
 
@@ -19,7 +22,7 @@ class matching {
     if (vis[u]) {
       return false;
     }
-    vis[u] = 1;
+    vis[u] = true;
     for (int v : node[u]) {
       if (right[v] == -1) {
         left[u] = v;
@@ -41,9 +44,7 @@ class matching {
     bool ok = true;
     while (ok) {
       ok = false;
-      for (int i = 0; i < n; i++) {
-        vis[i] = 0;
-      }
+      vis.assign(n, false);
       for (int i = 0; i < n; i++) {
         if (left[i] == -1) {
           ok |= match(i);
