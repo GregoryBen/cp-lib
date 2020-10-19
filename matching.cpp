@@ -1,4 +1,4 @@
-class matching {
+|class matching {
  public:
   int n, m;
   vector<int> left, right;
