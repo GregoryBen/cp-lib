@@ -1,14 +1,15 @@
-class tree {
+class Tree {
  public:
-  int n;
-  vector<int> l;
-  vector<vector<int>> pi, node;
+  int n, log_size;
+  vector<int> dis;
+  vector<vector<int>> anc, node;
 
-  tree(int _n) : n(_n) {
+  Tree(int _n) : n(_n) {
     assert(n > 0);
     node.resize(n);
-    l.resize(n, 0);
-    pi.resize(n, vector<int> (21, 0));
+    dis.resize(n);
+    log_size = 33 - __builtin_clz(n);
+    anc.resize(log_size, vector<int>(n));
   }
 
   void add(int u, int v) {
@@ -19,9 +20,9 @@ class tree {
 
   void dfs(int u) {
     for (int v : node[u]) {
-      if (v != pi[u][0]) {
-        l[v] = l[u] + 1;
-        pi[v][0] = u;
+      if (v != anc[0][u]) {
+        dis[v] = dis[u] + 1;
+        anc[0][v] = u;
         dfs(v);
       }
     }
@@ -29,9 +30,9 @@ class tree {
 
   void dfs() {
     dfs(0);
-    for (int i = 1; i <= 20; i++) {
+    for (int i = 1; i < log_size; i++) {
       for (int u = 0; u < n; u++) {
-        pi[u][i] = pi[pi[u][i - 1]][i - 1];
+        anc[i][u] = anc[i - 1][anc[i - 1][u]];
       }
     }
   }
@@ -43,46 +44,47 @@ class tree {
       int u = q.front();
       q.pop();
       for (int v : node[u])
-        if (v != pi[u][0]) {
-          l[v] = l[u] + 1;
-          pi[v][0] = u;
+        if (v != anc[0][u]) {
+          dis[v] = dis[u] + 1;
+          anc[0][v] = u;
           q.push(v);
         }
     }
-    for (int i = 1; i <= 20; i++) {
+    for (int i = 1; i < log_size; i++) {
       for (int u = 0; u < n; u++) {
-        pi[u][i] = pi[pi[u][i - 1]][i - 1];
+        anc[i][u] = anc[i - 1][anc[i - 1][u]];
       }
     }
   }
 
   int get_lca(int u, int v) {
-    if (l[v] > l[u]) {
+    assert(0 <= u && u <= n - 1 && 0 <= v && v <= n - 1);
+    if (dis[v] > dis[u]) {
       swap(u, v);
     }
-    for (int i = 20; ~i; --i) {
-      if (l[u] - l[v] >= (1 << i)) {
-        u = pi[u][i];
+    for (int i = log_size - 1; i >= 0; i--) {
+      if (dis[u] - dis[v] >= (1 << i)) {
+        u = anc[i][u];
       }
     }
     if (u == v) {
       return u;
     }
-    for (int i = 20; ~i; --i) {
-      if (pi[u][i] != pi[v][i]) {
-        u = pi[u][i];
-        v = pi[v][i];
+    for (int i = log_size - 1; i >= 0; i--) {
+      if (anc[i][u] != anc[i][v]) {
+        u = anc[i][u];
+        v = anc[i][v];
       }
     }
-    return pi[u][0];
+    return anc[0][u];
   }
 
   int get_diameter(int u, int& d) {
     int x = 0;
     for (int v : node[u]) {
-      if (v != pi[u][0]) {
-        pi[v][0] = u;
-        l[v] = l[u] + 1;
+      if (v != anc[0][u]) {
+        anc[0][v] = u;
+        dis[v] = dis[u] + 1;
         int y = get_diameter(v, d);
         d = max(d, x + y + 1);
         x = max(x, y);
@@ -94,6 +96,6 @@ class tree {
   int diameter() {
     int d = 0;
     get_diameter(0, d);
-    return d == 0 ? 0 : d - 1;
+    return (d == 0 ? 0 : d - 1);
   }
 };
