@@ -1,7 +1,7 @@
 // O(n) preprocessing O(log n) per query
 // incomplete
 
-struct LCA {
+|struct LCA {
   int n;
   vector<int> height, first, euler, segtree;
   vector<bool> vis;
