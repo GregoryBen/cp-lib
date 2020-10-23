@@ -62,6 +62,7 @@
   }
 
   int solve(int l, int r) {
+    assert(0 <= l && l <= n - 1 && 0 <= r && r <= n - 1);
     int x = first[l];
     int y = first[r];
     if (x > y) {
