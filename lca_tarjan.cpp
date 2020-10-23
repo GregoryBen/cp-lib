@@ -1,18 +1,26 @@
-// incomplete!
-
 struct lca_tarjan {
   int n;
-  vector<int> anc, vis, anc;
+  vector<int> anc, link;
   vector<bool> vis;
   vector<vector<int>> que;
-  dsu d;
 
   lca_tarjan(vector<vector<int>>& g) : n(g.size()) {
     assert(n > 0);
     anc.resize(n);
     vis.resize(n);
-    d.resize(n);
-    dfs(g, 0);
+    link.resize(n);
+  }
+
+  int find(int x) {
+    return (x == link[x] ? x : (link[x] = find(link[x])));
+  }
+
+  void unite(int a, int b) {
+    a = find(a);
+    b = find(b);
+    if (a != b) {
+      link[a] = b;
+    }
   }
 
   void dfs(vector<vector<int>>& g, int v) {
@@ -20,8 +28,15 @@ struct lca_tarjan {
     anc[v] = v;
     for (int i : g[v]) {
       if (vis[i]) continue;
-      dfs(i);
-      dsu
+      dfs(g, i);
+      unite(v, i);
+      anc[find(v)] = v;
+    }
+    for (int i : que[v]) {
+      if (vis[v]) {
+        // 0-index
+//        cout << "LCA" << v << " and " << i << " is " << anc[find(i)] << '\n';
+      }
     }
   }
 
