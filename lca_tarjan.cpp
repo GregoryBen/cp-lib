@@ -24,7 +24,7 @@ struct lca_tarjan {
     }
   }
 
-  void dfs(vector<vector<int>>& g, int v) {
+  void dfs(vector<vector<int>>& g, int v = 0) {
     vis[v] = true;
     anc[v] = v;
     for (int i : g[v]) {
