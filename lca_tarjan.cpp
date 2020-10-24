@@ -4,18 +4,19 @@ struct lca_tarjan {
   vector<bool> vis;
   vector<vector<int>> que;
 
-  lca_tarjan(vector<vector<int>>& g) : n(g.size()) {
+  lca_tarjan(int _n) : n(_n) {
     assert(n > 0);
     anc.resize(n);
-    vis.resize(n);
     link.resize(n);
+    vis.resize(n);
+    que.resize(n);
   }
 
-  int find(int x) {
+  inline int find(int x) {
     return (x == link[x] ? x : (link[x] = find(link[x])));
   }
 
-  void unite(int a, int b) {
+  inline void unite(int a, int b) {
     a = find(a);
     b = find(b);
     if (a != b) {
@@ -33,9 +34,8 @@ struct lca_tarjan {
       anc[find(v)] = v;
     }
     for (int i : que[v]) {
-      if (vis[v]) {
-        // 0-index
-//        cout << "LCA" << v << " and " << i << " is " << anc[find(i)] << '\n';
+      if (vis[i]) {
+        cout << "LCA " << v + 1 << " and " << i + 1 << " is " << anc[find(i)] + 1 << '\n';
       }
     }
   }
