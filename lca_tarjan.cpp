@@ -41,6 +41,7 @@ struct lca_tarjan {
   }
 
   void add(int u, int v) {
+    assert(0 <= u && u <= n - 1 && 0 <= v && v <= n - 1);
     que[u].emplace_back(v);
     que[v].emplace_back(u);
   }
