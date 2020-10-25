@@ -10,6 +10,7 @@ struct lca_tarjan {
     link.resize(n);
     vis.resize(n);
     que.resize(n);
+    iota(link.begin(), link.end(), 0);
   }
 
   inline int find(int x) {
@@ -24,15 +25,15 @@ struct lca_tarjan {
     }
   }
 
-  void dfs(vector<vector<int>>& g, int v = 0) {
-    vis[v] = true;
+  void dfs(vector<vector<int>>& g, int v = 0, int p = -1) {
     anc[v] = v;
     for (int i : g[v]) {
-      if (vis[i]) continue;
-      dfs(g, i);
+      if (i == p) continue;
+      dfs(g, i, v);
       unite(v, i);
       anc[find(v)] = v;
     }
+    vis[v] = true;
     for (int i : que[v]) {
       if (vis[i]) {
         cout << "LCA " << v + 1 << " and " << i + 1 << " is " << anc[find(i)] + 1 << '\n';
