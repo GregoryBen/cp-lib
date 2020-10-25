@@ -1,28 +1,17 @@
-struct lca_tarjan {
-  int n;
-  vector<int> anc, link;
+// need dsu
+
+struct lca_tarjan : public dsu {
+  using dsu::n;
+
+  vector<int> anc;
   vector<bool> vis;
   vector<vector<int>> que;
 
-  lca_tarjan(int _n) : n(_n) {
+  lca_tarjan(int _n) : dsu(_n) {
     assert(n > 0);
     anc.resize(n);
-    link.resize(n);
     vis.resize(n);
     que.resize(n);
-    iota(link.begin(), link.end(), 0);
-  }
-
-  inline int find(int x) {
-    return (x == link[x] ? x : (link[x] = find(link[x])));
-  }
-
-  inline void unite(int a, int b) {
-    a = find(a);
-    b = find(b);
-    if (a != b) {
-      link[a] = b;
-    }
   }
 
   void dfs(vector<vector<int>>& g, int v = 0, int p = -1) {
