@@ -1,4 +1,5 @@
 // O(n) preprocessing O(log n) per query
+// unweighted
 
 |struct LCA {
   int n;
