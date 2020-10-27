@@ -1,4 +1,5 @@
 // need dsu
+// unweighted
 
 struct lca_tarjan : public dsu {
   using dsu::n;
