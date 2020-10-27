@@ -1,13 +1,13 @@
 class Tree {
  public:
   int n, log_size;
-  bool is_par_done;
+  bool is_done;
   vector<int> dis, par;
   vector<vector<int>> anc, node;
 
   Tree(int _n) : n(_n) {
     assert(n > 0);
-    is_par_done = false;
+    is_done = false;
     node.resize(n);
   }
 
@@ -46,18 +46,18 @@ class Tree {
     dis.resize(n, 0);
     par.resize(n, -1);
     do_dfs(0);
-    is_par_done = true;
+    is_done = true;
   }
 
   void bfs() {
     dis.resize(n, 0);
     par.resize(n, -1);
     do_bfs();
-    is_par_done = true;
+    is_done = true;
   }
 
   void init_lca() {
-    assert(is_par_done);
+    assert(!is_done);
     log_size = 33 - __builtin_clz(n);
     anc.resize(log_size, vector<int>(n));
     for (int i = 0; i < n; i++) {
@@ -92,13 +92,13 @@ class Tree {
     return anc[0][u];
   }
 
-  int get_diameter(int u, int& d) {
+  int do_diameter(int u, int& d) {
     int x = 0;
     for (int v : node[u]) {
-      if (v != anc[0][u]) {
+      if (v != par[u]) {
         par[v] = u;
         dis[v] = dis[u] + 1;
-        int y = get_diameter(v, d);
+        int y = do_diameter(v, d);
         d = max(d, x + y + 1);
         x = max(x, y);
       }
@@ -106,9 +106,10 @@ class Tree {
     return x + 1;
   }
 
-  int diameter() {
+  int get_diameter() {
     int d = 0;
-    get_diameter(0, d);
+    do_diameter(0, d);
+    is_done = true;
     return (d == 0 ? 0 : d - 1);
   }
 };
