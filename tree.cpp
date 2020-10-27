@@ -65,7 +65,7 @@ class Tree {
     }
     for (int i = 1; i < log_size; i++) {
       for (int u = 0; u < n; u++) {
-        anc[i][u] = (anc[i - 1][u] ? -1 : anc[i - 1][anc[i - 1][u]]);
+        anc[i][u] = (anc[i - 1][u] == -1 ? -1 : anc[i - 1][anc[i - 1][u]]);
       }
     }
   }
