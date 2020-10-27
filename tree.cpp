@@ -1,15 +1,14 @@
 class Tree {
  public:
   int n, log_size;
-  vector<int> dis;
+  bool is_par_done;
+  vector<int> dis, par;
   vector<vector<int>> anc, node;
 
   Tree(int _n) : n(_n) {
     assert(n > 0);
+    is_par_done = false;
     node.resize(n);
-    dis.resize(n);
-    log_size = 33 - __builtin_clz(n);
-    anc.resize(log_size, vector<int>(n));
   }
 
   void add(int u, int v) {
@@ -18,41 +17,55 @@ class Tree {
     node[v].emplace_back(u);
   }
 
-  void dfs(int u) {
+  void do_dfs(int u) {
     for (int v : node[u]) {
-      if (v != anc[0][u]) {
+      if (v != par[u]) {
         dis[v] = dis[u] + 1;
-        anc[0][v] = u;
-        dfs(v);
+        par[v] = u;
+        do_dfs(v);
       }
     }
   }
 
-  void dfs() {
-    dfs(0);
-    for (int i = 1; i < log_size; i++) {
-      for (int u = 0; u < n; u++) {
-        anc[i][u] = anc[i - 1][anc[i - 1][u]];
-      }
-    }
-  }
-
-  void bfs() {
+  void do_bfs() {
     queue <int> q;
     q.push(0);
     while (!q.empty()) {
       int u = q.front();
       q.pop();
       for (int v : node[u])
-        if (v != anc[0][u]) {
+        if (v != par[u]) {
           dis[v] = dis[u] + 1;
-          anc[0][v] = u;
+          par[v] = u;
           q.push(v);
         }
     }
+  }
+
+  void dfs() {
+    dis.resize(n, 0);
+    par.resize(n, -1);
+    do_dfs(0);
+    is_par_done = true;
+  }
+
+  void bfs() {
+    dis.resize(n, 0);
+    par.resize(n, -1);
+    do_bfs();
+    is_par_done = true;
+  }
+
+  void init_lca() {
+    assert(is_par_done);
+    log_size = 33 - __builtin_clz(n);
+    anc.resize(log_size, vector<int>(n));
+    for (int i = 0; i < n; i++) {
+      anc[0][i] = par[i];
+    }
     for (int i = 1; i < log_size; i++) {
       for (int u = 0; u < n; u++) {
-        anc[i][u] = anc[i - 1][anc[i - 1][u]];
+        anc[i][u] = (anc[i - 1][u] ? -1 : anc[i - 1][anc[i - 1][u]]);
       }
     }
   }
@@ -83,7 +96,7 @@ class Tree {
     int x = 0;
     for (int v : node[u]) {
       if (v != anc[0][u]) {
-        anc[0][v] = u;
+        par[v] = u;
         dis[v] = dis[u] + 1;
         int y = get_diameter(v, d);
         d = max(d, x + y + 1);
