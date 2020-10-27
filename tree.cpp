@@ -1,3 +1,5 @@
+// unweighted
+
 class Tree {
  public:
   int n, log_size;
