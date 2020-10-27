@@ -71,7 +71,7 @@ class Tree {
   }
 
   int get_lca(int u, int v) {
-    assert(0 <= u && u <= n - 1 && 0 <= v && v <= n - 1);
+    assert(!is_done && 0 <= u && u <= n - 1 && 0 <= v && v <= n - 1);
     if (dis[v] > dis[u]) {
       swap(u, v);
     }
