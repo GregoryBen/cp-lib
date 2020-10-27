@@ -1,11 +1,11 @@
 |template <typename T, class F = function<T(const T&, const T&)>>
-struct Csegtree {
+struct segtree {
   int n;
   vector<T> tree;
   F func;
 
   template <typename IT>
-  Csegtree(IT begin, IT end, const F& f) : n(end - begin), func(f) {
+  segtree(IT begin, IT end, const F& f) : n(end - begin), func(f) {
     tree.resize(2 * n);
     copy(begin, end, tree.begin() + n);
     for (int i = n - 1; i >= 1; i--) {
