@@ -59,7 +59,7 @@ class Tree {
   }
 
   void init_lca() {
-    assert(!is_done);
+    assert(is_done);
     log_size = 33 - __builtin_clz(n);
     anc.resize(log_size, vector<int>(n));
     for (int i = 0; i < n; i++) {
@@ -73,7 +73,7 @@ class Tree {
   }
 
   int get_lca(int u, int v) {
-    assert(!is_done && 0 <= u && u <= n - 1 && 0 <= v && v <= n - 1);
+    assert(is_done && 0 <= u && u <= n - 1 && 0 <= v && v <= n - 1);
     if (dis[v] > dis[u]) {
       swap(u, v);
     }
