@@ -41,7 +41,9 @@ struct centroid {
   void dfs_centroid(int start, const G& g) {
     int c = one_centroid(start, g);
     dead[c] = true;
-
+    /*compute centroid data */
+    
+    /* compute centroid data */
     for (int i : g[c]) {
       if (!dead[i]) {
         dfs_centroid(i, g);
