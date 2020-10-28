@@ -1,7 +1,7 @@
 struct centroid {
   int n;
   vector<int> sz;
-  vector<int> par;
+  vector<int> cpar;
   vector<bool> dead;
 
   template <typename G>
@@ -34,7 +34,7 @@ struct centroid {
   centroid(const G& g) : n(g.size()) {
     assert(n > 0);
     sz.resize(n);
-    par.resize(n);
+    cpar.resize(n);
     dead.resize(n);
     dfs_centroid(0, -1, g);
   }
@@ -42,7 +42,7 @@ struct centroid {
   template <typename G>
   void dfs_centroid(int v, int p, const G& g) {
     int c = one_centroid(v, g);
-    par[v] = p;
+    cpar[c] = p;
     dead[c] = true;
     /* compute centroid data */
 
