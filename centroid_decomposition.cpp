@@ -42,9 +42,9 @@ struct centroid {
   template <typename G>
   void dfs_centroid(int v, int p, const G& g) {
     int c = one_centroid(v, g);
-    cpar[c] = p;
     dead[c] = true;
     /* compute centroid data */
+    cpar[c] = p;
 
     /* compute centroid data */
     for (int i : g[c]) {
@@ -118,6 +118,8 @@ struct centroid {
   template <typename G>
   void dfs_centroid(int v, int p, const G& g) {
     int c = one_centroid(v, g);
+    dead[c] = true;
+    /* compute centroid data */
     cpar[c] = p;
     if (p != -1) {
       cchild[p].push_back(c);
@@ -130,10 +132,8 @@ struct centroid {
         dfs_dis(i, c, g);
       }
     }
-    /* compute centroid data */
 
     /* compute centroid data */
-    dead[c] = true;
     for (int i : g[c]) {
       if (!dead[i]) {
         dfs_centroid(i, c, g);
