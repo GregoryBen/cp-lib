@@ -4,7 +4,7 @@ class Tree {
  public:
   int n, log_size;
   bool is_done;
-  vector<int> dis, par;
+  vector<int> depth, par;
   vector<vector<int>> anc, node;
 
   Tree(int _n) : n(_n) {
@@ -22,7 +22,7 @@ class Tree {
   void do_dfs(int u) {
     for (int v : node[u]) {
       if (v != par[u]) {
-        dis[v] = dis[u] + 1;
+        depth[v] = depth[u] + 1;
         par[v] = u;
         do_dfs(v);
       }
@@ -37,7 +37,7 @@ class Tree {
       q.pop();
       for (int v : node[u])
         if (v != par[u]) {
-          dis[v] = dis[u] + 1;
+          depth[v] = depth[u] + 1;
           par[v] = u;
           q.push(v);
         }
@@ -45,14 +45,14 @@ class Tree {
   }
 
   void dfs() {
-    dis.resize(n, 0);
+    depth.resize(n, 0);
     par.resize(n, -1);
     do_dfs(0);
     is_done = true;
   }
 
   void bfs() {
-    dis.resize(n, 0);
+    depth.resize(n, 0);
     par.resize(n, -1);
     do_bfs();
     is_done = true;
@@ -74,11 +74,11 @@ class Tree {
 
   int get_lca(int u, int v) {
     assert(is_done && 0 <= u && u <= n - 1 && 0 <= v && v <= n - 1);
-    if (dis[v] > dis[u]) {
+    if (depth[v] > depth[u]) {
       swap(u, v);
     }
     for (int i = log_size - 1; i >= 0; i--) {
-      if (dis[u] - dis[v] >= (1 << i)) {
+      if (depth[u] - depth[v] >= (1 << i)) {
         u = anc[i][u];
       }
     }
@@ -99,7 +99,7 @@ class Tree {
     for (int v : node[u]) {
       if (v != par[u]) {
         par[v] = u;
-        dis[v] = dis[u] + 1;
+        depth[v] = depth[u] + 1;
         int y = do_diameter(v, d);
         d = max(d, x + y + 1);
         x = max(x, y);
