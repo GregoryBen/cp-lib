@@ -8,7 +8,8 @@ inline char get_char() {
   static char buf[BUF_SIZE];
   static int len = 0, pos = 0;
   if (pos == len) {
-    pos = 0, len = fread(buf, 1, BUF_SIZE, stdin);
+    len = fread(buf, 1, BUF_SIZE, stdin);
+    pos = 0;
   }
   if (pos == len) {
     return -1;
@@ -42,7 +43,8 @@ inline T scan() {
   char c = scan_char();
   T x = 0;
   if (c == '-') {
-    s = -1, c = get_char();
+    s = -1;
+    c = get_char();
   }
   while ('0' <= c && c <= '9') {
     x = x * 10 + c - '0';
@@ -73,14 +75,14 @@ inline void write(T x, char end = 0) {
   if (x < 0) {
     write_char('-'), x = -x;
   }
-  int n = 0;
+  int pos = 0;
   char s[24];
-  while (x || !n) {
-    s[n++] = '0' + x % 10;
+  while (x || !pos) {
+    s[pos++] = '0' + x % 10;
     x /= 10;
   }
-  while (n--) {
-    write_char(s[n]);
+  while (pos--) {
+    write_char(s[pos]);
   }
   if (end) {
     write_char(end);
