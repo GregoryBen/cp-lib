@@ -1,4 +1,4 @@
-namespace fast_IO {
+|namespace fast_IO {
 
 static const int BUF_SIZE = 1 << 20;
 static int write_pos = 0;
