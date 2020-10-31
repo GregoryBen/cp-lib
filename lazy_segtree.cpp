@@ -102,11 +102,11 @@ struct segtree {
     return tree[i];
   }
 
-  Q query(int i, int j, Q x, Q y) {
+  Q query(int i, int j) {
     assert(0 <= i && i <= j && j <= n - 1);
     i += n, j += n + 1;
     _propagate(i), _propagate(j - 1);
-    Q res_front = x, res_back = y;
+    Q res_front{}, res_back{};
     for (; i < j; i /= 2, j /= 2) {
       if (i & 1) res_front = unite(res_front, tree[i++]);
       if (j & 1) res_back = unite(tree[--j], res_back);
