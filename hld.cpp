@@ -20,7 +20,7 @@ struct HeavyLight {
         par[i] = v;
         depth[i] = depth[v] + 1;
         int sz[i] = dfs(g, i);
-        if (subtree > max_subtree) {
+        if (sz[i] > max_subtree) {
           heavy[v] = i;
           max_subtree = sz[i];
         }
