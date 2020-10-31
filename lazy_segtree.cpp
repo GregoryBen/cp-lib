@@ -114,7 +114,7 @@ struct segtree {
     return unite(res_front, res_back);
   }
   
-  void debug() {
+  void debug_tree() {
     #ifdef LOCAL
       cerr << "start" << '\n';
       for (int i = 0; i < 2 * n; i++) {
