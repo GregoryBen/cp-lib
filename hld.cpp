@@ -10,6 +10,7 @@ struct HeavyLight {
   vector<int> depth;
   vector<int> root;
   vector<int> pos;
+  segtree<T, T> tree;
 
   template <typename G>
   void dfs(const vector<vector<int>>& g, int v) {
@@ -30,12 +31,11 @@ struct HeavyLight {
   }
 
   void process_path(int u, int v, function<void(int, int)> f) {
-    while (root[u] != root[v]) {
+    for (; root[u] != root[v]; v = par[root[v]]) {
       if (depth[root[u]] > depth[root[v]]) {
         swap(u, v);
       }
       f(pos[root[v]], pos[v] + 1);
-      v = par[root[v]];
     }
     if (depth[u] > depth[v]) {
       swap(u, v);
@@ -59,13 +59,12 @@ struct HeavyLight {
   HeavyLight(const G& g, bool _edge_val) : n(g.size()), edge_val(_edge_val) {
     assert(n > 0);
     heavy.resize(n, -1);
-    par.resize(n);
+    par.resize(n, -1);
     depth.resize(n);
     root.resize(n);
     pos.resize(n);
     dfs(g, 0);
     decompose();
-    segtree<T, T> tree(n);
   }
 
   void modify_subtree(int v, int x) {
