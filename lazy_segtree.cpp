@@ -32,6 +32,9 @@ struct segtree {
     tree.resize(2 * n, id.first);
     has.resize(n);
     delay.resize(n, id.second);
+    for (int i = n - 1; i >= 1; i--) {
+      tree[i] = unite(tree[2 * i], tree[2 * i + 1]);
+    }
   }
 
   template <typename IT>
