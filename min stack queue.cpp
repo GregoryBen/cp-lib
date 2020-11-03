@@ -16,21 +16,10 @@ struct min_stack {
     st.push({x, y});
   }
 
-  void pop() {
-    st.pop();
-  }
-
-  node top() {
-    return st.top();
-  }
-  
-  int size() {
-    return st.size();
-  }
-  
-  bool empty() {
-    return st.empty();
-  }
+  void pop() { st.pop(); }
+  node top() { return st.top(); }
+  int size() { return st.size(); }
+  bool empty() { return st.empty(); }
 };
 
 // min queue
