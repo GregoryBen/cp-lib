@@ -1,5 +1,7 @@
 // hld 0 index + subtree update and query
-// preprocessing O(|V| + |E|) query O(log^2 |V|)
+// preprocessing O(|V| + |E|)
+// query and upate subtree O(log |V|)
+// query and update path O(log^2 |V|)
 
 template <typename T, typename L>
 struct HeavyLight : public segtree<T, L> {
