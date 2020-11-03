@@ -53,7 +53,6 @@ struct HeavyLight : public segtree<T, L> {
     return depth[u] + depth[v] - 2 * depth[~w ? w : lca(u, v)];
   }
 
-
   void process_path(int u, int v, function<void(int, int)> f) {
     for (; root[u] != root[v]; v = par[root[v]]) {
       if (depth[root[u]] > depth[root[v]]) {
