@@ -1,4 +1,3 @@
-// incomplete
 // hld 0 index and subtree update
 
 template <typename T, typename L>
