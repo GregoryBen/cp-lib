@@ -50,7 +50,7 @@ struct HeavyLight : public segtree<T, L> {
   }
 
   int dist(int u, int v, int w = -1) {
-    return depth[u] + depth[v] - 2 * depth[~w ? w : lca(u, v)];
+    return depth[u] + depth[v] - 2 * depth[lca(u, v)];
   }
 
   void process_path(int u, int v, function<void(int, int)> f) {
