@@ -1,4 +1,4 @@
-// hld 0 index and subtree update
+// hld 0 index, subtree update and query
 
 template <typename T, typename L>
 struct HeavyLight : public segtree<T, L> {
@@ -93,6 +93,9 @@ struct HeavyLight : public segtree<T, L> {
       update(l, r, x);
     });
   }
+  
+  T query_subtree(int v) {
+    return query(pos[v] + (is_node ? 0 : 1), pos[v] + sz[v] - 1);
 
   T query_path(int u, int v) {
     T res{};
