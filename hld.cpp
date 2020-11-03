@@ -42,12 +42,12 @@ struct HeavyLight : public segtree<T, L> {
   }
 
   int lca(int u, int v) {
-    for(; root[u] != root[v]; v = par[root[v]]) {
+		for(; root[u] != root[v]; v = par[root[v]]) {
       if(depth[root[u]] > depth[root[v]]) {
         swap(u, v);
       }
-    }
-    return depth[u] < depth[v] ? u : v;
+		}
+		return depth[u] < depth[v] ? u : v;
   }
 
   int dist(int u, int v, int w = -1) {
@@ -98,7 +98,7 @@ struct HeavyLight : public segtree<T, L> {
   T query_path(int u, int v) {
     T res{};
     process_path(u, v, [this, &res](int l, int r) {
-      unite(res, query(l, r));
+      res = unite(res, query(l, r));
     });
     return res;
   }
