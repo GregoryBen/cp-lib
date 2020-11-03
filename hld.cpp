@@ -78,7 +78,6 @@ struct HeavyLight : public segtree<T, L> {
     root.resize(n, r);
     depth.resize(n);
     sz.resize(n);
-    rpos.resize(n);
     g = _g;
     dfs_sz(r);
     root[r] = r;
