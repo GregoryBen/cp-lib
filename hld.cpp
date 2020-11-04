@@ -66,7 +66,7 @@ struct HeavyLight : public segtree<T, L> {
     if (u != v || is_node) {
       int a = min(pos[u], pos[v]);
       int b = max(pos[u], pos[v]);
-      int add =  (is_node ? 0 : 1);
+      int add = (is_node ? 0 : 1);
       f(a + add, b);
     }    
   }
