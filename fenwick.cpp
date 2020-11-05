@@ -43,4 +43,18 @@ struct fenwick {
   T query(int l, int r) {
     return query(r) - query(l - 1);
   }
+  
+  int lower_bound(T x) {
+    T res{};
+    int pos = -1;
+    for (int i = 31 - __builtin_clz(n); i >= 0; i--) {
+      int add = (1 << i) - 1;
+      T cur = (pos + add == -1 ? 0 : tree[pos + add]);
+      if (pos + add < n - 1 && res + cur < x) {
+        res += cur;
+        pos += add;
+      }
+    }
+    return pos + 1;
+  }
 };
