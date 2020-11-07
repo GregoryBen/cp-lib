@@ -6,7 +6,7 @@ T inverse(T a, T m) {
   if (a < 0) a += m;
   assert(a != 0);
   if (a == 1) return 1;
-  return m - inverse(m, a) * m / a;
+  return m - (long long) inverse(m, a) * m / a;
 }
 
 template <int MOD>
@@ -129,14 +129,14 @@ class modular {
 };
 
 template <typename T, typename U>
-T power(T a, U b) {
+T power(const T& a, const U& b) {
   assert(b >= 0);
-  T res = 1;
-  while (b > 0) {
-    if (b & 1) {
-      res = res * a;
-    }
-    a *= a; b >>= 1;
+  T x = a, res = 1;
+  U p = b;
+  while (p > 0) {
+    if (p & 1) res *= x;
+    x *= x;
+    p >>= 1;
   }
   return res;
 }
