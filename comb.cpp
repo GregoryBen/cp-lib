@@ -19,11 +19,11 @@ struct Comb {
     G.resize(n);
     vector<int> inv(n);
     inv[1] = 1;
-    for (int i = 2; i < n; i++) {
+    for (int i = 2; i <= n; i++) {
       inv[i] = (int) ((md - md / i) * (long long) inv[md % i] % md);
     }
     F[0] = G[0] = 1;
-    for (int i = 1; i < n; i++) {
+    for (int i = 1; i <= n; i++) {
       F[i] = (int) ((long long) F[i - 1] * i % md);
       G[i] = (int) ((long long) G[i - 1] * inv[i] % md);
     }
