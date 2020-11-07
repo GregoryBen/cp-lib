@@ -6,7 +6,7 @@ T inverse(T a, T m) {
   if (a < 0) a += m;
   assert(a != 0);
   if (a == 1) return 1;
-  return m - (long long) inverse(m, a) * m / a;
+  return m - (long long) inverse(m, a) * (m / a);
 }
 
 template <int MOD>
