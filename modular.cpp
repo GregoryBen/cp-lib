@@ -142,8 +142,8 @@ T power(const T& a, const U& b) {
 }
 
 /*
-// comment template<int MOD> and static_assert()
 // add static int MOD;
+// comment template<int MOD> and static_assert()
 using Type = int;
 Type modular::MOD;
 Type& md = modular::MOD;
