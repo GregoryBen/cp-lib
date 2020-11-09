@@ -34,11 +34,11 @@ class modular {
   modular(T value) : x(normalize(value)) {
   }
 
-  modular operator + () const {
+  modular operator + () {
     return modular(*this);
   }
 
-  modular operator - () const {
+  modular operator - () {
     if (x != 0) x = MOD - x;
     return modular(*this);
   }
