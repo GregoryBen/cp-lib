@@ -141,5 +141,12 @@ T power(const T& a, const U& b) {
   return res;
 }
 
+/*
+using Type = int;
+Type modular::MOD;
+Type& md = modular::MOD;
+using mint = modular;
+*/
+
 const int md = (int) ...|;
 using mint = modular<md>;
