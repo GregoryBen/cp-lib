@@ -10,7 +10,7 @@ T inverse(T a, T m) {
 }
 
 template <int MOD>
-class modular {
+struct modular {
   using value_type = int;
   static_assert(MOD > 1, "Modulus must be greater than 1");
 
@@ -142,6 +142,8 @@ T power(const T& a, const U& b) {
 }
 
 /*
+// comment template<int MOD> and static_assert()
+// add static int MOD;
 using Type = int;
 Type modular::MOD;
 Type& md = modular::MOD;
