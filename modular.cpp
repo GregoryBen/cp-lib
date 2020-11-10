@@ -35,7 +35,7 @@ struct modular {
   }
   
   modular inv() const {
-    return modular(1) / modular(inverse(x, MOD));
+    return modular(inverse(x, MOD));
   }
 
   modular operator + () const {
