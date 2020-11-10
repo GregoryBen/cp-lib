@@ -35,11 +35,11 @@ struct modular {
   }
 
   modular operator + () const {
-    return modular(*this);
+    return modular(x);
   }
 
   modular operator - () const {
-    return modular(*this ? MOD - *this : *this);
+    return modular(x ? MOD - x : x);
   }
 
   modular& operator++() {
