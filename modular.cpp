@@ -33,6 +33,10 @@ struct modular {
   template <typename T>
   modular(T value) : x(normalize(value)) {
   }
+  
+  modular inv() const {
+    return modular(1) / modular(x, MOD);
+  }
 
   modular operator + () const {
     return modular(x);
