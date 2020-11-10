@@ -34,13 +34,12 @@ struct modular {
   modular(T value) : x(normalize(value)) {
   }
 
-  modular operator + () {
+  modular operator + () const {
     return modular(*this);
   }
 
-  modular operator - () {
-    if (x != 0) x = MOD - x;
-    return modular(*this);
+  modular operator - () const {
+    return modular(*this ? MOD - *this : *this);
   }
 
   modular& operator++() {
