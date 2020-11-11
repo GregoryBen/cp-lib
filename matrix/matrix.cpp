@@ -130,6 +130,3 @@ matrix<T> power(const matrix<T>& A, U k) {
   }
   return res;
 }
-
-template <typename T>
-using mat = matrix<T>;
