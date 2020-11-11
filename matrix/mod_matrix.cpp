@@ -193,4 +193,4 @@ mint dot(const vector<mint>& a, const vector<mint>& b) {
   return val;
 }
 
-using mat = mod_matrix;
+using matrix = mod_matrix;
