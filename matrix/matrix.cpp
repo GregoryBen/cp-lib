@@ -14,8 +14,10 @@ struct matrix {
   matrix(const vector<vector<T>>& a) {
     assert(a.size() > 0 && a[0].size() > 0);
     n = a.size(); m = a[0].size();
+    val.resize(n);
     for (int i = 0; i < n; i++) {
       assert((int) a[i].size() == m);
+      val[i].resize(m);
       for (int j = 0; j < m; j++) {
         val[i][j] = a[i][j];
       }
