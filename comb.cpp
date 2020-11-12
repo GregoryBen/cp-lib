@@ -1,4 +1,4 @@
-const int md = (int) ...;
+const int md = (int) ...|;
 
 vector<int> F;
 vector<int> G;
