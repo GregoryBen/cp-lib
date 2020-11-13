@@ -115,6 +115,31 @@ struct matrix {
     }
     return true;
   }
+  
+  T det() const {
+    assert(n == m);
+    vector<vector<T>> a = val;
+    T res = 1;
+    for (int i = 0; i < n; i++) {
+      for (int j = i + 1; j < n; j++) {
+        while (a[j][i]) {
+          long long t = (long long) a[i][i] / (long long) a[j][i];
+          if (t) {
+            for (int k = i; k < n; k++) {
+              a[i][k] -= a[j][k] * t;
+            }
+          }
+          swap(a[i], a[j]);
+          res = -res;
+        }
+      }
+      res *= a[i][i];
+      if (!res) {
+        return 0;
+      }
+    }
+    return res;
+  }
 };
 
 template <typename T, typename U>
