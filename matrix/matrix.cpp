@@ -3,7 +3,7 @@ struct matrix {
   int n, m;
   vector<vector<T>> val;
 
-  matrix(int _n, int _m, T x) : n(_n), m(_m) {
+  matrix(int _n, int _m, T x = 0) : n(_n), m(_m) {
     assert(n > 0 && m > 0);
     val.resize(n);
     for (int i = 0; i < n; i++) {
