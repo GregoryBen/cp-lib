@@ -133,7 +133,7 @@
     vector<vector<mint>> a = val;
     mint D(1);
     for (int j = 0; j < m; j++) {
-      for (int i = j+1; i < m; i++) {
+      for (int i = j + 1; i < m; i++) {
         while (a[i][j]) {
           D = -D;
           mint t((long long) a[j][j] / (long long) a[i][j]);
