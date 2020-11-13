@@ -38,38 +38,50 @@
     return A;
   }
 
-  mod_matrix& operator += (const mod_matrix& A) {
-    assert(n == A.n && m == A.m);
+  mod_matrix operator + (const mod_matrix &other) const {
+    mod_matrix res(n, m);
     for (int i = 0; i < n; i++) {
       for (int j = 0; j < m; j++) {
-        val[i][j] += A.val[i][j];
+        res.val[i][j] = val[i][j] + other.val[i][j];
       }
     }
-    return *this;
+    return res;
   }
 
-  mod_matrix& operator -= (const mod_matrix& A) {
-    assert(n == A.n && m == A.m);
+  mod_matrix operator - (const mod_matrix &other) const {
+    mod_matrix res(n, m);
     for (int i = 0; i < n; i++) {
       for (int j = 0; j < m; j++) {
-        val[i][j] -= A.val[i][j];
+        res.val[i][j] = val[i][j] - other.val[i][j];
       }
     }
-    return *this;
+    return res;
   }
 
-  mod_matrix& operator *= (const mod_matrix& A) {
-    assert(m == A.n);
+  mod_matrix operator * (const mod_matrix &other) const {
+    assert(m == other.n);
+    int L = other.m;
+    mod_matrix res(n, L);
     for (int i = 0; i < n; i++) {
-      vector<mint> row(A.m);
-      for (int j = 0; j < A.m; j++) {
-        for (int k = 0; k < A.n; k++) {
-          row[j] += val[i][k] * A.val[k][j];
+      for (int j = 0; j < L; j++) {
+        for (int k = 0; k < m; k++) {
+          res.val[i][j] += val[i][k] * other.val[k][j];
         }
       }
-      val[i] = row;
     }
-    return *this;
+    return res;
+  }
+
+  mod_matrix& operator += (const mod_matrix &other) {
+    return *this = *this + other;
+  }
+
+  mod_matrix& operator -= (const mod_matrix &other) {
+    return *this = *this - other;
+  }
+
+  mod_matrix& operator *= (const mod_matrix &other) {
+    return *this = *this * other;
   }
 
   static mod_matrix eye(int n) {
@@ -135,18 +147,6 @@
     return D;
   }
 };
-
-mod_matrix operator + (mod_matrix& A, mod_matrix& B) {
-  return A += B;
-}
-
-mod_matrix operator - (mod_matrix& A, mod_matrix& B) {
-  return A -= B;
-}
-
-mod_matrix operator * (mod_matrix& A, mod_matrix& B) {
-  return A *= B;
-}
 
 template <typename T>
 mod_matrix power(const mod_matrix& A, T k) {
