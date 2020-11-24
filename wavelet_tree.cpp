@@ -1,7 +1,12 @@
-// preprocessing : O(log n log(max(A))
+// preprocessing : O(n log n log(max(A))
 // query : (log(max(A))
 // max(A) : maximum element in array
 // ex comp : [&](int i, int j) { return i < j; }; (default)
+
+// [l, r], k, 0-based
+// kth : smallest element in [l, r]
+// LTE : number of elements in interval [L, R] that are less than or equal to y.
+// count : number of occurrences of element x in interval [L, R]
 
 template <typename T>
 struct wavelet_node {
@@ -49,10 +54,10 @@ struct wavelet_tree {
     if (v->lo == v->hi) {
       return v->lo;
     }
-    int lb = v->b[l - 1];
-    int rb = v->b[r];
+    int lb = v->b[l];
+    int rb = v->b[r + 1];
     int inLeft = rb - lb;
-    return k <= inLeft ? kth(v->l, lb + 1, rb, k) : kth(v->r, l - lb, r - rb, k - inLeft);
+    return k < inLeft ? kth(v->l, lb, rb - 1, k) : kth(v->r, l - lb, r - rb, k - inLeft);
   }
 
   int LTE(wavelet_node<T> *v, int l, int r, T x) {
@@ -62,39 +67,37 @@ struct wavelet_tree {
     if (comp(v->hi, x + 1)) {
       return r - l + 1;
     }
-    int lb = v->b[l - 1];
-    int rb = v->b[r];
-    return LTE(v->l, lb + 1, rb, x) + LTE(v->r, l - lb, r - rb, x);
+    int lb = v->b[l];
+    int rb = v->b[r + 1];
+    return LTE(v->l, lb, rb - 1, x) + LTE(v->r, l - lb, r - rb, x);
   }
 
   int count(wavelet_node<T> *v, int l, int r, T x) {
     if (l > r || comp(x, v->lo) || comp(v->hi, x)) {
+      cerr << "out" << l << ' ' << r << ' ' << v->lo << ' ' << v->hi << '\n';
       return 0;
     }
     if (v->lo == v->hi) {
       return r - l + 1;
     }
-    int lb = v->b[l - 1];
-    int rb = v->b[r];
+    int lb = v->b[l];
+    int rb = v->b[r + 1];
     T mid = v->lo + (v->hi - v->lo) / 2;
-    return x <= mid ? count(v->l, lb + 1, rb, x) : count(v->r, l - lb, r - rb, x);
+    return x <= mid ? count(v->l, lb, rb - 1, x) : count(v->r, l - lb, r - rb, x);
   }
 
   T kth(int l, int r, int k) {
     assert(0 <= l && l <= r && r <= n - 1 && 0 <= k && k <= n - 1);
-    ++l; ++r; ++k;
     return kth(root, l, r, k);
   }
 
   int LTE(int l, int r, T x) {
     assert(0 <= l && l <= r && r <= n - 1 && mn <= x && x <= mx);
-    ++l; ++r;
     return LTE(root, l, r, x);
   }
 
   int count(int l, int r, T x) {
     assert(0 <= l && l <= r && r <= n - 1 && mn <= x && x <= mx);
-    ++l; ++r;
     return count(root, l, r, x);
   }
 
