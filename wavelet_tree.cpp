@@ -20,7 +20,7 @@ struct wavelet_node {
     if(begin >= end || lo == hi) {
       return;
     }
-    T mid = lo + (hi - lo) / 2;
+    T mid = lo + (hi - lo >> 1);
     auto f = [&](T x) {
       return comp(x, mid + 1);
     };
@@ -81,7 +81,7 @@ struct wavelet_tree {
     }
     int lb = v->b[l];
     int rb = v->b[r + 1];
-    T mid = v->lo + (v->hi - v->lo) / 2;
+    T mid = v->lo + (v->hi - v->lo >> 1);
     return x <= mid ? count(v->l, lb, rb - 1, x) : count(v->r, l - lb, r - rb, x);
   }
 
