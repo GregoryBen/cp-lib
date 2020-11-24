@@ -59,7 +59,7 @@ struct wavelet_tree {
     if (l > r || !comp(v->lo, x)) {
       return 0;
     }
-    if (!comp(x, v->hi + 1)) {
+    if (comp(v->hi, x + 1)) {
       return r - l + 1;
     }
     int lb = v->b[l - 1];
