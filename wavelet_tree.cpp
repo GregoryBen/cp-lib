@@ -38,7 +38,7 @@ struct wavelet_tree {
   C comp;
 
   template <typename IT>
-  wavelet_tree(IT begin, IT end, const C& c = [&](T i, T j) { return i < j; }) : n(end - begin), comp(c) {
+  wavelet_tree(IT begin, IT end, const C& c = less<T>()) : n(end - begin), comp(c) {
     assert(n > 0);
     mn = *min_element(begin, end, comp);
     mx = *max_element(begin, end, comp);
