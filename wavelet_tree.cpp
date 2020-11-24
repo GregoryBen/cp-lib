@@ -74,7 +74,6 @@ struct wavelet_tree {
 
   int count(wavelet_node<T> *v, int l, int r, T x) {
     if (l > r || comp(x, v->lo) || comp(v->hi, x)) {
-      cerr << "out" << l << ' ' << r << ' ' << v->lo << ' ' << v->hi << '\n';
       return 0;
     }
     if (v->lo == v->hi) {
