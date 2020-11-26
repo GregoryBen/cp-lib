@@ -1,4 +1,4 @@
-// preprocessing : O(n log n log(max(A))
+// preprocessing : O(n log(max(A))
 // query : (log(max(A))
 // max(A) : maximum element in array
 // ex comp : [&](int i, int j) { return i < j; }; (default)
