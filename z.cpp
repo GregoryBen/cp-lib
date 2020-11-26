@@ -16,3 +16,17 @@ vector<int> z_function(const T &s) {
   }
   return z;
 }
+
+template <typename T>
+vector<int> getPrefix(const T& s) {
+  int n = (int) s.size();
+  vector<int> p(n);
+  vector<int> z = z_function(s);
+  for (int i = 1; i < n; i++) {
+    p[i + z[i] - 1] = max(p[i + z[i] - 1], z[i]);
+  }
+  for (int i = n - 2; i > 0; i--) {
+    p[i] = max(p[i + 1] - 1, p[i]);
+  }
+  return p;
+}
