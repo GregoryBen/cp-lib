@@ -26,7 +26,6 @@ vector<int> getZ(const T &s) {
     debug(i, i - p[i] + 1);
     z[i - p[i] + 1] = max(z[i - p[i] + 1], p[i]);
   }
-  debug("here");
   for (int i = 1; i < n; i++) {
     z[i] = max(z[i - 1] - 1, z[i]);
   }
