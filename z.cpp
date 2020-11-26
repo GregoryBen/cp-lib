@@ -20,7 +20,7 @@ vector<int> z_function(const T &s) {
 // convert z_function to prefix
 
 template <typename T>
-vector<int> prefix_function(const T& s) {
+vector<int> getPrefix(const T& s) {
   int n = (int) s.size();
   vector<int> p(n);
   vector<int> z = z_function(s);
