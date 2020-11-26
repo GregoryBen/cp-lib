@@ -17,6 +17,8 @@ vector<int> z_function(const T &s) {
   return z;
 }
 
+// convert z_function to prefix
+
 template <typename T>
 vector<int> prefix_function(const T& s) {
   int n = (int) s.size();
