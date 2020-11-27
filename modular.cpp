@@ -55,7 +55,8 @@ struct modular {
   }
 
   modular operator++(int) {
-    modular t = *this; return ++x, t;
+    modular t = *this; 
+    return ++x, t;
   }
 
   modular operator--(int) {
