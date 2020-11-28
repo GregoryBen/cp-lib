@@ -1,4 +1,12 @@
 // source : https://github.com/the-tourist/algo/blob/master/string/manacher.cpp
+// res[2 * i] = odd radius in position i
+// res[2 * i + 1] = even radius between positions i and i + 1
+// s = "abaa" -> res = {0, 0, 1, 0, 0, 1, 0}
+// in other words, for every z from 0 to 2 * n - 2:
+// calculate i = (z + 1) >> 1 and j = z >> 1
+// now there is a palindrome from i - res[z] to j + res[z]
+// (watch out for i > j and res[z] = 0)
+
 
 template <typename T>
 vector<int> manacher(const T &s) {
