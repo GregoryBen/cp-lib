@@ -12,7 +12,7 @@ vector<int> manacher(const T &s) {
     int i = (z + 1) >> 1;
     int j = z >> 1;
     int p = (i >= r ? 0 : min(r - i, res[2 * (l + r) - z]));
-    while (0 <= j - p - 1 && i + p + 1 < n) {
+    while (0 <= i - p - 1 && j + p + 1 < n) {
       if (s[j + p + 1] != s[i - p - 1]) {
         break;
       }
