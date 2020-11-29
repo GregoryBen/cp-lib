@@ -19,12 +19,11 @@ vector<int> z_function(const T &s) {
 }
 
 // convert z_function to prefix
+// maybe need z_function
 
-template <typename T>
-vector<int> getPrefix(const T& s) {
-  int n = (int) s.size();
+vector<int> getPrefix(const vector<int>& z) {
+  int n = (int) z.size();
   vector<int> p(n);
-  vector<int> z = z_function(s);
   for (int i = 1; i < n; i++) {
     p[i + z[i] - 1] = max(p[i + z[i] - 1], z[i]);
   }
