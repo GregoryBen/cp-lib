@@ -18,12 +18,11 @@ vector<int> prefix_function(const T &s) {
 }
 
 // convert prefix to z
+// maybe need prefix_function
 
-template <typename T>
-vector<int> getZ(const T &s) {
-  int n = (int) s.size();
+vector<int> getZ(const vector<int> &p) {
+  int n = (int) p.size();
   vector<int> z(n);
-  vector<int> p = prefix_function(s);
   for (int i = 1; i < n; i++) {
     if (p[i] > 0) {
       z[i - p[i] + 1] = p[i];
