@@ -21,7 +21,7 @@ vector<int> z_function(const T &s) {
 // convert z_function to prefix
 // maybe need z_function
 
-vector<int> getPrefix(const vector<int>& z) {
+vector<int> getPrefix(const vector<int> &z) {
   int n = (int) z.size();
   vector<int> p(n);
   for (int i = 1; i < n; i++) {
