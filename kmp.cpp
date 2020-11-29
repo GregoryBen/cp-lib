@@ -1,5 +1,4 @@
-// kmp 
-// O(n)
+// kmp_table - O(|pattern|)
 
 template <typename T>
 vector<int> prefix_function(const T &s) {
@@ -15,6 +14,33 @@ vector<int> prefix_function(const T &s) {
     p[i] = j;
   }
   return p;
+}
+
+// kmp_search - O(|s|)
+
+template <typename T>
+vector<int> search(const T &w, const T &s, const vector<int> &p) {
+  assert((int) w.size() > 0 && w.size() == p.size());
+  int i = 0, j = 0;
+  int m = (int) w.size();
+  int n = (int) s.size();
+  vector<int> res;
+  while (i < n) {
+    if (w[j] == s[i]) {
+      i++; j++;
+    }
+    if (j == m) {
+      res.emplace_back(i - j);
+      j = p[j - 1];
+    } else if (i < n && w[j] != s[i]) {
+      if (j != 0) {
+        j = p[j - 1];
+      } else {
+        i = i + 1;
+      }
+    }
+  }
+  return res;
 }
 
 // convert prefix to z
