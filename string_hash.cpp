@@ -1,25 +1,44 @@
-struct string_hash {
-  const int A = 31;
-  const int B = (int) 1e9 + 9;
+struct hashing {
+  static constexpr int dim = 4;
+  static constexpr int md = (1u << 31) - 1;
 
   int n;
-  vector<int> h;
-  vector<int> p;
+  vector<vector<int>> h;
+  vector<vector<int>> p;
 
-  string_hash(const string &s) : n((int) s.size()) {
+  static const vector<int> &get_bases() {
+    static mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
+    static vector<int> bases;
+    while (bases.size() < dim) {
+      bases.emplace_back(uniform_int_distribution<int>((int) 1e9, md - 1)(rng));
+    }
+    return bases;
+  }
+
+  hashing(const string &s) : n((int) s.size()) {
     assert(n > 0);
-    h.resize(n);
-    p.resize(n);
-    h[0] = s[0] - 'a' + 1;
-    p[0] = 1;
-    for (int i = 1; i < n; i++) {
-      h[i] = ((long long) h[i - 1] * A + s[i] - 'a' + 1) % B;
-      p[i] = (long long) p[i - 1] * A % B;
+    h.resize(dim);
+    p.resize(dim);
+    const vector<int> &bases = get_bases();
+    for (int d = 0; d < dim; d++) {
+      h[d].resize(n + 1);
+      p[d].resize(n + 1);
+      p[d][0] = 1;
+      long long base = bases[d];
+      for (int i = 0; i < n; i++) {
+        h[d][i + 1] = (h[d][i] * base + s[i]) % md;
+        p[d][i + 1] = p[d][i] * base % md;
+      }
     }
   }
 
-  int get_hash(int l, int r) {
-    assert(0 <= l && l <= r && r <= n - 1);
-    return (r == 0 ? h[r] : (int) ((h[r] - (long long) h[l - 1] * p[r - l + 1]) % B));
+  vector<int> get_hash(int i, int len) {
+    assert(0 <= i && i + len <= n);
+    vector<int> res;
+    for (int d = 0; d < dim; d++) {
+      int hash = (int) ((h[d][i + len] + (long long) h[d][i] * (md - p[d][len])) % md);
+      res.emplace_back(hash);
+    }
+    return res;
   }
 };
