@@ -1,3 +1,5 @@
+// max = number of node
+
 template <int MAX>
 struct trie {
   int last_node;
