@@ -34,10 +34,9 @@ struct hashing {
 
   vector<int> get_hash(int i, int len) {
     assert(0 <= i && i + len <= n);
-    vector<int> res;
+    vector<int> res(dim);
     for (int d = 0; d < dim; d++) {
-      int hash = (int) ((h[d][i + len] + (long long) h[d][i] * (md - p[d][len])) % md);
-      res.emplace_back(hash);
+      res[d] = (int) ((h[d][i + len] + (long long) h[d][i] * (md - p[d][len])) % md);
     }
     return res;
   }
