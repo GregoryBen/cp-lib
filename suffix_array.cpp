@@ -49,3 +49,34 @@ vector<int> lcp_array(const T &s, vector<int> &sa) {
   }
   return lcp;
 }
+
+// find lcp for arbitrary suffix (need rmq)
+
+{
+
+  int sa_size = sa.size();
+  SparseTb<int> lcp_rmq(lcp.begin(), lcp.end(), [&](int i, int j) {
+    return min(i, j);
+  });
+  vector<int> rank(sa.size());
+  for (int i = 0; i < sa_size; i++) {
+    rank[sa[i]] = i;
+  }
+  auto get_lcp = [&](int i, int j) {
+    assert(0 <= i && i <= j && j <= sa_size - 1);
+    if (i == sa_size - 1 || j == sa_size - 1) {
+      return 0;
+    }
+    if (i == j) {
+      return (int) sa_size - i;
+    }
+    int l = rank[i];
+    int r = rank[j];
+    if (l > r) {
+      swap(l, r);
+    }
+    debug(l, r);
+    return lcp_rmq.query(l, r - 1);
+  };
+
+}
