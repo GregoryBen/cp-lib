@@ -37,7 +37,7 @@ vector<int> lcp_array(const T &s, vector<int> &sa) {
   for (int i = 0; i < n; i++) {
     rank[sa[i]] = i;
   }
-  vector<int> lcp(n - 1);
+  vector<int> lcp(max(n - 1, 0));
   for (int i = 0, h = 0; i < n; i++) {
     if (rank[i] < n - 1) {
       for (int j = sa[rank[i] + 1]; s[i + h] == s[j + h]; h++) continue;
