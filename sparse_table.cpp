@@ -1,3 +1,5 @@
+// return min index with min value -> [&](int i, int j) { return a[i] <= a[j] ? i : j) };
+
 template <typename T, class F = function<T(const T&, const T&)>>
 struct SparseTb {
   int n;
