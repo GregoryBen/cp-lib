@@ -43,6 +43,25 @@ vector<int> search(const T &w, const T &s, const vector<int> &p) {
   return res;
 }
 
+// prefix automaton O(kn) k = |ALPHA|
+// lowercase
+
+vector<vector<int>> prefix_automaton(const string &s, const vector<int> &p) {
+  assert((int) s.size() == (int) p.size());
+  int n = (int) s.size();
+  vector<vector<int>> aut(n, vector<int>(26));
+  for (int i = 0; i < n; i++) {
+    for (char c = 'a'; c <= 'z'; c++) {
+      if (i > 0 && c != s[i]) {
+        aut[i][c] = aut[p[i - 1]][c];
+      } else {
+        aut[i][c] = i + (c == s[i]);
+      }
+    }
+  }
+  return aut;
+}
+
 // convert prefix to z
 // maybe need prefix_function
 
