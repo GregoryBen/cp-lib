@@ -6,7 +6,7 @@ struct trie {
   int end[MAX];
   int next[MAX][26];
 
-  void insert(string &s) {
+  int insert(string &s) {
     int cur = 0;
     for (char c : s) {
       int at = (int) c - 'a';
@@ -17,6 +17,7 @@ struct trie {
       cur = next[cur][at];
     }
     end[cur]++;
+    return cur;
   }
 
   bool search(string s) {
