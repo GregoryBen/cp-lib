@@ -1,3 +1,5 @@
+// time : O(n), memory : O(nk), k = alphabet size
+
 struct aho_corasick {
   static const int ALPHA = 26;
 
