@@ -13,15 +13,14 @@ struct suffix_automaton {
     }
   };
 
-  int sz;
-  int last;
+  int n, sz;
   vector<node> st;
 
-  suffix_automaton(const T &s) {
+  suffix_automaton(const T &s) : n(s.size()) {
     assert(!s.empty());
-    st.resize(2 * s.size());
+    st.resize(2 * n - 1);
     sz = 1;
-    last = 0;
+    int last = 0;
     st[0].link = -1;
     for (int i = 0; i < (int) s.size(); i++) {
       int c = s[i];
