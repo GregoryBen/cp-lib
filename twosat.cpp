@@ -1,3 +1,5 @@
+// require get_scc (tarjan)
+
 struct twosat {
   int n;
   vector<int> ans;
@@ -13,36 +15,26 @@ struct twosat {
     g = _g;
   }
 
-  void add(int x, bool val_x) {
+  void add(int x, bool vx) {
     assert(0 <= x && x <= n - 1);
-    g[2 * x + (val_x ^ 1)].emplace_back(2 * x + val_x);
+    g[2 * x + (vx ^ 1)].emplace_back(2 * x + vx);
   }
 
-  void add(int x, bool val_x, int y, bool val_y) {
+  void add(int x, bool vx, int y, bool vy) {
     assert(0 <= x && x <= n - 1 && 0 <= y && y <= n - 1);
-    g[2 * x + (val_x ^ 1)].emplace_back(2 * y + val_y);
-    g[2 * x + (val_y ^ 1)].emplace_back(2 * x + val_x);
-  }
-
-  void reverse(vector<vector<int>> &gr) {
-    gr.resize(2 * n);
-    for (int i = 0; i < n; i++) {
-      for (int j : g[i]) {
-        gr[j].emplace_back(i);
-      }
-    }
+    g[2 * x + (vx ^ 1)].emplace_back(2 * y + vy);
+    g[2 * y + (vy ^ 1)].emplace_back(2 * x + vx);
   }
 
   bool solve() {
     int cnt = 0;
     ans.assign(n, -1);
-    vector<vector<int>> gr;
-    reverse(gr);
-    vector<int> c = get_scc(g, gr, cnt);
+    vector<int> c = get_scc(g, cnt);
     for (int i = 0; i < n; i++) {
       if (c[2 * i] == c[2 * i + 1]) {
         return false;
       }
+      ans[i] = (c[2 * i] < c[2 * i + 1]);
     }
     return true;
   }
