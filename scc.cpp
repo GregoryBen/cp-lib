@@ -64,10 +64,11 @@ vector<int> get_scc(const vector<vector<int>> &g, int &cnt) {
     if (vis_time[i] == low[i]) {
       while (vis[i]) {
         int t = s.top();
-        c[t] = i;
+        c[t] = cnt;
         vis[t] = false;
         s.pop();
       }
+      cnt++;
     }
   };
   for (int i = 0; i < n; i++) {
@@ -75,12 +76,8 @@ vector<int> get_scc(const vector<vector<int>> &g, int &cnt) {
       dfs(i);
     }
   }
-  vector<int> d(n, -1);
-  for (int i = 0; i < n; i++) {
-    if (d[c[i]] == -1) {
-      d[c[i]] = cnt++;
-    }
-    c[i] = d[c[i]];
+  for (int& x : c) {
+    x = cnt - 1 - x;
   }
   return c;
 }
