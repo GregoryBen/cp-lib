@@ -1,6 +1,7 @@
+// author : Simon Lindholm
+
 vector<int> euler_walk(const vector<vector<pair<int, int>>> &g, int m, int sc = 0) {
   int n = g.size();
-  assert(n > 0);
   vector<int> D(n);
   vector<int> its(n);
   vector<int> eu(m);
