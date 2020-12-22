@@ -1,3 +1,6 @@
+// faster than Hopcroft Karp BPM in a random graph but slower in a d-regular graph
+// O(EV) in d-regular graph
+
 |class matching {
  public:
   int n, m;
