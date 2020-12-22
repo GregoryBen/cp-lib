@@ -14,6 +14,7 @@
     right.resize(m, -1);
     vis.resize(n);
     g.resize(n);
+    res = 0;
   }
 
   void add(int u, int v) {
