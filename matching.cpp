@@ -1,19 +1,19 @@
 // faster than Hopcroft Karp BPM in a random graph but slower in a d-regular graph
 // O(EV) in d-regular graph
 
-|class matching {
- public:
+|struct matching {
   int n, m;
-  vector<int> left, right;
+  vector<int> left;
+  vector<int> right;
   vector<bool> vis;
   vector<vector<int>> node;
 
   matching(int _n, int _m) : n(_n), m(_m) {
-    assert(n > 0 && m > 0);
-    node.resize(n);
+    assert(n >= 0 && m >= 0);
     left.resize(n, -1);
     right.resize(m, -1);
     vis.resize(n);
+    node.resize(n);
   }
 
   void add(int u, int v) {
@@ -34,7 +34,7 @@
       }
     }
     for (int v : node[u]) {
-      if(match(right[v])) {
+      if (match(right[v])) {
         left[u] = v;
         right[v] = u;
         return true;
