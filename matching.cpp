@@ -14,7 +14,7 @@
   }
 
   void add(int u, int v) {
-    assert(0 <= u && u <= n - 1 && 0 <= v && v <= n - 1);
+    assert(0 <= u && u <= n - 1 && 0 <= v && v <= m - 1);
     node[u].emplace_back(v);
   }
 
