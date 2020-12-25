@@ -1,7 +1,7 @@
 // O(n) call dinic's max_flow
 
 template <typename T, bool S>
-vector<vector<pair<int, int>>> gomory_hu(dinic<long long, false> &g) {
+vector<vector<pair<int, int>>> gomory_hu(dinic<T, S> &g) {
   int n = g.n;
   vector<vector<pair<int, int>>> t(n);
   vector<int> p(n);
