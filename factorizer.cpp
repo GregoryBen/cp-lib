@@ -8,6 +8,7 @@ long long mult(long long a, long long b, long long md) {
 }
 
 long long power(long long a, long long b, long long md) {
+  a %= md;
   long long ans = 1;
   while (b > 0) {
     if (b & 1) {
