@@ -32,7 +32,7 @@ bool is_prime(long long n) {
     while (p != 1 && p != n - 1 && a % n && i--) {
       p = mult(p, p, n);
     }
-    if (p != n-1 && i != s) {
+    if (p != n - 1 && i != s) {
       return false;
     }
   }
