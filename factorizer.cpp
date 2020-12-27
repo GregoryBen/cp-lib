@@ -1,4 +1,5 @@
 // Millar Rabin Primality Test / Pollard Rho Algorithm
+// work up to 2 ** 60
 // 7 times slower than a^b mod m / O(n^{1/4}) gcd calls
 // source : https://github.com/FlowerOfSorrow/Cpp_Implementations/blob/master/Numeric/Number_Theory/pollard_rho.sublime-snippet
 
