@@ -4,7 +4,7 @@
 // source : https://github.com/FlowerOfSorrow/Cpp_Implementations/blob/master/Numeric/Number_Theory/pollard_rho.sublime-snippet
 
 long long mult(long long a, long long b, long long md) {
-  long long ret = a * b - md * (long long) (1.L / md * a * b);
+  long long ret = (unsigned long long) a * b - md * (long long) (1.L / md * a * b);
   return ret + md * (ret < 0) - md * (ret >= (long long) md);
 }
 
