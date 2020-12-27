@@ -37,7 +37,7 @@ struct hlpp {
     g[b].push_back({a, a_size, fr});
   }
  
-  void updHeight(int v, int nh) {
+  void update_height(int v, int nh) {
     work++;
     if (height[v] != n) {
       cnt[height[v]]--;
@@ -54,7 +54,7 @@ struct hlpp {
     }
   }
  
-  void globalRelabel() {
+  void global_relabel() {
     work = 0;
     fill(height.begin(), height.end(), n);
     fill(cnt.begin(), cnt.end(), 0);
@@ -71,7 +71,7 @@ struct hlpp {
       for (edge &e : g[v]) {
         if (height[e.to] == n && g[e.to][e.rev].f > 0) {
           q.push(e.to);
-          updHeight(e.to, height[v] + 1);
+          update_height(e.to, height[v] + 1);
         }
       }
       highest = height[v];
@@ -104,11 +104,11 @@ struct hlpp {
       }
     }
     if (cnt[height[v]] > 1) {
-      updHeight(v, nh);
+      update_height(v, nh);
     } else {
       for (int i = height[v]; i <= highest; i++) {
         for (int j : gap[i]) {
-          updHeight(j, n);
+          update_height(j, n);
         }
         gap[i].clear();
       }
@@ -121,7 +121,7 @@ struct hlpp {
     s = src; t = dest;
     excess[s] = INF;
     excess[t] = -INF;
-    globalRelabel();
+    global_relabel();
     for (edge &e : g[s]) {
       push(s, e);
     }
@@ -131,10 +131,11 @@ struct hlpp {
         lst[highest].pop_back();
         discharge(v);
         if (work > 4 * n) {
-          globalRelabel();
+          global_relabel();
         }
       }
       highest--;
     } while (0 <= highest);
     return excess[t] + INF;
   }
+};
