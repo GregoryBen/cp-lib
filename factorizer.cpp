@@ -72,7 +72,7 @@ vector<long long> factor(long long n) {
   long long x = pollard(n);
   vector<long long> l = factor(x);
   vector<long long> r = factor(n / x);
-  l.insert(l.end(), r.begin() ,r.end());
+  l.insert(l.end(), r.begin(), r.end());
   return l;
 }
 
