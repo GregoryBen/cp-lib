@@ -75,4 +75,3 @@ vector<long long> factor(long long n) {
   l.insert(l.end(), r.begin(), r.end());
   return l;
 }
-
