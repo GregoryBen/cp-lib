@@ -42,8 +42,8 @@ struct mcmf {
   }
 
   pair<T, C> cal_min_cost_flow(int s, int t, T maxf) {
-    vector<int> pot(n), prevnode(n), prevedge(n);
-    vector<C> dist(n);
+    vector<int> prevnode(n), prevedge(n);
+    vector<C> dist(n), pot(n);
     vector<T> curflow(n);
     if (neg_cost) {
       vector<int> q(n);
@@ -91,7 +91,7 @@ struct mcmf {
           if (e.cap <= e.f) {
             continue;
           }
-          int nprio = dist[u] + e.cost + pot[u] - pot[v];
+          C nprio = dist[u] + e.cost + pot[u] - pot[v];
           if (dist[v] > nprio) {
             dist[v] = nprio;
             q.emplace(nprio, v);
