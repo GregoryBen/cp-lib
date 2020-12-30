@@ -1,3 +1,5 @@
+// https://old.yosupo.jp/submission/34405
+
 const long double PI = acos(-1.0L);
 
 void fft(vector<complex<double>> &a) {
