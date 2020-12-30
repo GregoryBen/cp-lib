@@ -57,7 +57,7 @@ vector<int> multiply(const vector<int> &a, const vector<int> &b) {
   }
   fft(out);
   for (int i = 0; i < (int) res.size(); i++) {
-    res[i] = imag(out[i]) / (4 * n);
+    res[i] = llround(imag(out[i]) / (4 * n));
   }
   return res;
 }
