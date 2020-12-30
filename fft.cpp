@@ -1,4 +1,5 @@
-// https://old.yosupo.jp/submission/34405
+// https://old.yosupo.jp/submission/34405 default
+// https://old.yosupo.jp/submission/34411 (faster in mod 1e9 + 7 slower in mod 998244353)
 
 const long double PI = acos(-1.0L);
 
