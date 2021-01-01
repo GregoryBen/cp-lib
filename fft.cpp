@@ -1,4 +1,5 @@
-// https://old.yosupo.jp/submission/34558
+// https://old.yosupo.jp/submission/34558 (1000000007)
+// https://old.yosupo.jp/submission/34559 (998244353)
 
 constexpr long double PI = acos(-1.0L);
 
