@@ -1,19 +1,32 @@
-// https://old.yosupo.jp/submission/34405 default
-// https://old.yosupo.jp/submission/34411 (a bit faster in mod 1e9 + 7, slower in mod 998244353)
+// https://old.yosupo.jp/submission/34558
 
-const long double PI = acos(-1.0L);
+constexpr long double PI = acos(-1.0L);
 
-void fft(vector<complex<double>> &a) {
+template <typename T>
+struct comp {
+  T x, y;
+  comp() { x = y = 0; }
+  comp(T _x, T _y) : x(_x), y(_y) {}
+
+  friend comp<T> operator+(comp<T> a, comp<T> b) { return comp(a.x + b.x, a.y + b.y); }
+  friend comp<T> operator-(comp<T> a, comp<T> b) { return comp(a.x - b.x, a.y - b.y); }
+  friend comp<T> operator*(comp<T> a, comp<T> b) { return comp(a.x * b.x - a.y * b.y, a.x * b.y + a.y * b.x); }
+  friend comp<T> operator/(comp<T> a, T b) { return comp(a.x / b, a.y / b); }
+  friend comp<T> conj(comp<T> a) { return comp(a.x, -a.y); }
+};
+
+void fft(vector<comp<double>> &a) {
   int n = a.size();
   int L = 31 - __builtin_clz(n);
-  static vector<complex<long double>> R(2, 1);
-  static vector<complex<double>> rt(2, 1);
+  static vector<comp<double>> root(2, {1, 0});
+  static vector<comp<long double>> R(2, {1, 0});
   for (int k = 2; k < n; k <<= 1) {
     R.resize(n);
-    rt.resize(n);
-    complex<long double> x(cos(PI / k), sin(PI / k));
+    root.resize(n);
+    comp<long double> x(cos(PI / k), sin(PI / k));
     for (int i = k; i < 2 * k; i++) {
-      rt[i] = R[i] = i & 1 ? R[i / 2] * x : R[i / 2];
+      R[i] = (i & 1 ? R[i / 2] * x : R[i / 2]);
+      root[i] = {(double) R[i].x, (double) R[i].y};
     }
   }
   vector<int> rev(n);
@@ -26,10 +39,9 @@ void fft(vector<complex<double>> &a) {
   for (int k = 1; k < n; k <<= 1) {
     for (int i = 0; i < n; i += k * 2) {
       for (int j = 0; j < k ; j++) {
-        auto x = (double*) &rt[j + k], y = (double*) &a[i + j + k];
-        complex<double> z(x[0] * y[0] - x[1] * y[1], x[0] * y[1] + x[1] * y[0]);
+        comp<double> z = root[j + k] * a[i + j + k];
         a[i + j + k] = a[i + j] - z;
-        a[i + j] += z;
+        a[i + j] = a[i + j] + z;
       }
     }
   }
@@ -42,22 +54,24 @@ vector<int> multiply(const vector<int> &a, const vector<int> &b) {
   vector<int> res(a.size() + b.size() - 1);
   int L = 32 - __builtin_clz(res.size());
   int n = 1 << L;
-  vector<complex<double>> in(n);
-  vector<complex<double>> out(n);
-  copy(a.begin(), a.end(), in.begin());
+  vector<comp<double>> in(n);
+  vector<comp<double>> out(n);
+  for (int i = 0; i < (int) a.size(); i++) {
+    in[i].x = a[i];
+  }
   for (int i = 0; i < (int) b.size(); i++) {
-    in[i].imag(b[i]);
+    in[i].y = b[i];
   }
   fft(in);
-  for (complex<double> &x : in) {
-    x *= x;
+  for (comp<double> &x : in) {
+    x = x * x;
   }
   for (int i = 0; i < n; i++) {
     out[i] = in[-i & (n - 1)] - conj(in[i]);
   }
   fft(out);
   for (int i = 0; i < (int) res.size(); i++) {
-    res[i] = llround(imag(out[i]) / (4 * n));
+    res[i] = llround(out[i].y / (4 * n));
   }
   return res;
 }
@@ -70,29 +84,30 @@ vector<int> multiply_mod(const vector<int> &a, const vector<int> &b, int m) {
   int B = 32 - __builtin_clz(res.size());
   int n = 1 << B;
   int cut = (int) sqrt(m);
-  vector<complex<double>> L(n);
-  vector<complex<double>> R(n);
-  vector<complex<double>> outs(n);
-  vector<complex<double>> outl(n);
+  vector<comp<double>> L(n);
+  vector<comp<double>> R(n);
+  vector<comp<double>> outs(n);
+  vector<comp<double>> outl(n);
   for (int i = 0; i < (int) a.size(); i++) {
-    L[i] = complex<double> ((int) a[i] / cut, (int) a[i] % cut);
+    L[i] = comp<double> ((int) a[i] / cut, (int) a[i] % cut);
   }
   for (int i = 0; i < (int) b.size(); i++) {
-    R[i] = complex<double> ((int) b[i] / cut, (int) b[i] % cut);
+    R[i] = comp<double> ((int) b[i] / cut, (int) b[i] % cut);
   }
   fft(L);
   fft(R);
   for (int i = 0; i < n; i++) {
     int j = -i & (n - 1);
     outl[j] = (L[i] + conj(L[j])) * R[i] / (2.0 * n);
-    outs[j] = (L[i] - conj(L[j])) * R[i] / (2.0 * n) / 1i;
+    outs[j] = (L[i] - conj(L[j])) * R[i] / (2.0 * n);
+    outs[j] = {outs[j].y, -outs[j].x};
   }
   fft(outl);
   fft(outs);
   for (int i = 0; i < (int) res.size(); i++) {
-    long long av = (long long) (real(outl[i]) + 0.5);
-    long long bv = (long long) (imag(outl[i]) + 0.5) + (long long) (real(outs[i]) + 0.5);
-    long long cv = (long long) (imag(outs[i]) + 0.5);
+    long long av = (long long) (outl[i].x + 0.5);
+    long long bv = (long long) (outl[i].y + 0.5) + (long long) (outs[i].x + 0.5);
+    long long cv = (long long) (outs[i].y + 0.5);
     res[i] = ((av % m * cut + bv) % m * cut + cv) % m;
   }
   return res;
