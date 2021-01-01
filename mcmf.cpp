@@ -1,4 +1,4 @@
-// O(E * V + E * logV * FLOW)
+// O(E * V + E * logV * FLOW) - dijkstra
 // negative-cost edges are allowed
 // negative-cost cycles are not allowed
 
