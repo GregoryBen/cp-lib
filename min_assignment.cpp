@@ -14,7 +14,7 @@
 //
 // Complexity:
 //   O(n^3).
-//   Much faster than the Kuhn-Munkres algorithm.
+//   Much faster than the Kuhn-Munkres/hungarian algorithm.
 //
 // Note:
 //   v = potential
