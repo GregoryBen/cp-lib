@@ -10,11 +10,11 @@ void generate_primes_linear_time(int n) {
       lp[i] = i;
       prime.emplace_back(i);
     }
-    for (int x : prime) {
-      if (x > lp[i] || i * x > n) {
+    for (int p : prime) {
+      if (p > lp[i] || i * p > n) {
         break;
       }
-      lp[i * x] = x;
+      lp[i * p] = p;
     }
   }
 }
