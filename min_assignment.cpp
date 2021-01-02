@@ -40,9 +40,12 @@ template <typename T>
 vector<int> min_assignment(const vector<vector<T>> &c) {
   int n = c.size(), m = c[0].size();
   assert(n <= m);
-  vector<int> L(n, -1), R(m, -1);
-  vector<int> index(m), prev(m);
-  vector<T> v(m), dist(m);
+  vector<int> L(n, -1);
+  vector<int> R(m, -1);
+  vector<int> index(m);
+  vector<int> prev(m);
+  vector<T> v(m);
+  vector<T> dist(m);
   iota(index.begin(), index.end(), 0);
   auto residue = [&](int i, int j) {
     return c[i][j] - v[j];
