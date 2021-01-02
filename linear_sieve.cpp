@@ -3,7 +3,7 @@ vector<int> prime;
 
 void generate_primes_linear_time(int n) {
   assert(n > 1);
-  lp.resize(n + 1, 0);
+  lp.assign(n + 1, 0);
   prime.clear();
   for (int i = 2; i <= n; i++) {
     if (lp[i] == 0) {
