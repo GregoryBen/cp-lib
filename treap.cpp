@@ -99,7 +99,7 @@ pair<tnode*, tnode*> split_size(tnode* t, int sz) {
 
 tnode* merge(tnode* l, tnode* r) {
   if (!l) {
-    return l;
+    return r;
   }
   if (!r) {
     return l;
