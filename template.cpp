@@ -1,9 +1,11 @@
 #include <bits/stdc++.h>
 #include <ext/pb_ds/assoc_container.hpp>
 #include <ext/pb_ds/tree_policy.hpp>
+#include <ext/rope>
 
 using namespace std;
 using namespace __gnu_pbds;
+using namespace __gnu_cxx;
 
 template <typename T>
 using ordered_set =
