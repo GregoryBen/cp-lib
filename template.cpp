@@ -1,3 +1,7 @@
+// https://codeforces.com/blog/entry/10355 (rope)
+// https://codeforces.com/blog/entry/11080 (ordered_set)
+// https://codeforces.com/blog/entry/60737 (gp_hash_table)
+
 #include <bits/stdc++.h>
 #include <ext/pb_ds/assoc_container.hpp>
 #include <ext/pb_ds/tree_policy.hpp>
