@@ -123,7 +123,7 @@ tnode* insert(tnode* x, int v) {
   return merge(a.first, merge(new tnode(v), b.second));
 }
 
-tnode* remove(tnode* x, int v) { // delete v
+tnode* remove(tnode* x, int v) {
   auto a = split(x, v);
   auto b = split(a.second, v + 1);
   return merge(a.first, b.second);
