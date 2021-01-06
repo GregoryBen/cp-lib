@@ -1,7 +1,8 @@
 // simple treap (not perfict)
 // need rng
-// https://cp-algorithms.com/data_structures/treap.html (implicit treap)
-// https://github.com/indy256/codelibrary/blob/master/cpp/structures/treap.h
+// https://github.com/ADJA/algos/blob/master/DataStructures/CartesianTreeImplicitKeys.cpp
+// https://github.com/indy256/codelibrary/blob/master/cpp/structures/treap.h (update range, query range, apply)
+// function split and merge output treap
 
 struct tnode {
   int pri;
