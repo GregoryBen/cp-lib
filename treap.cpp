@@ -86,17 +86,17 @@ pair<tnode*, tnode*> split(tnode* t, int v) {
   }
 }
 
-pair<tnode*, tnode*> split_size(tnode* t, int sz) {
+pair<tnode*, tnode*> split_index(tnode* t, int sz) {
   if (!t) {
     return {t, t};
   }
   propagate(t);
-  if (get_size(t->c[0]) >= sz) {
-    auto p = split_size(t->c[0], sz);
+  if (get_size(t->c[0]) >= sz + 1) {
+    auto p = split_index(t->c[0], sz);
     t->c[0] = p.second;
     return {p.first, calc(t)};
   } else {
-    auto p = split_size(t->c[1], sz - get_size(t->c[0]) - 1);
+    auto p = split_index(t->c[1], sz - get_size(t->c[0]) - 1);
     t->c[1] = p.first;
     return {calc(t), p.second};
   }
@@ -120,6 +120,14 @@ tnode* merge(tnode* l, tnode* r) {
     t = r;
   }
   return calc(t);
+}
+
+void reverse(tnode* x, int l, int r) {
+  auto t1 = split_index(x, l - 1);
+  auto t2 = split_index(t1.second, r - 1);
+  t2.first->flip ^= 1;
+  x = merge(t1.first, t2.first);
+  x = merge(x, t2.second);
 }
 
 tnode* insert(tnode* x, int v) {
