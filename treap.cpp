@@ -58,14 +58,16 @@ tnode* calc(tnode* x) {
   return x;
 }
 
-void tour(tnode* x, vector<int> &v) {
-  if (!x) {
-    return;
-  }
-  propagate(x);
-  tour(x->c[0], v);
-  v.emplace_back(x->val);
-  tour(x->c[1], v);
+void debug_treap(tnode* x) {
+  #ifdef LOCAL
+    if (!x) {
+      return;
+    }
+    propagate(x);
+    debug_treap(x->c[0]);
+    cerr << x->val << ' ';
+    debug_treap(x->c[1]);
+  #endif
 }
 
 pair<tnode*, tnode*> split(tnode* t, int v) {
