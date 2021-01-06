@@ -1,6 +1,5 @@
 // simple treap (not perfict)
 // need rng
-// https://github.com/ADJA/algos/blob/master/DataStructures/CartesianTreeImplicitKeys.cpp
 // https://cp-algorithms.com/data_structures/treap.html (implicit treap)
 // https://github.com/indy256/codelibrary/blob/master/cpp/structures/treap.h
 
